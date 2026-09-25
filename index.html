@@ -892,6 +892,34 @@ td{
           </div>
 
         </div>
+
+      </div>
+
+      <!-- DASHBOARD LOGOUT -->
+
+      <div class="section">
+
+        <button
+          id="dashboardLogoutBtn"
+          type="button"
+          class="secondary-btn"
+          style="
+            display:block;
+            width:100%;
+            margin-top:20px;
+            padding:14px;
+            background:#182b40;
+            color:#ffffff;
+            border:1px solid rgba(255,255,255,.15);
+            border-radius:12px;
+            font-weight:800;
+            text-align:center;
+            cursor:pointer;
+          "
+        >
+          Logout
+        </button>
+
       </div>
 
     </section>
@@ -2638,6 +2666,10 @@ function applyLanguage(lang){
   setText("settingsSubtitle","settingsSubtitle");
   setText("logoutBtn","logout");
 
+  /* NEW: DASHBOARD LOGOUT LANGUAGE */
+
+  setText("dashboardLogoutBtn","logout");
+
   setText("transactionRecordTitle","transactionRecord");
   setText("closeModal","close");
 
@@ -4083,42 +4115,54 @@ document
    LOGOUT
    ========================================================= */
 
+function logoutUser(){
+
+  localStorage.removeItem(
+    STORAGE_CURRENT
+  );
+
+  if(minerInterval){
+
+    clearInterval(minerInterval);
+    minerInterval = null;
+
+  }
+
+  if(bonusInterval){
+
+    clearInterval(bonusInterval);
+    bonusInterval = null;
+
+  }
+
+  if(withdrawalInterval){
+
+    clearInterval(withdrawalInterval);
+    withdrawalInterval = null;
+
+  }
+
+  document
+    .getElementById("authForm")
+    .reset();
+
+  showAuth("login");
+
+}
+
 document
   .getElementById("logoutBtn")
-  .addEventListener("click",() => {
+  .addEventListener(
+    "click",
+    logoutUser
+  );
 
-    localStorage.removeItem(
-      STORAGE_CURRENT
-    );
-
-    if(minerInterval){
-
-      clearInterval(minerInterval);
-      minerInterval = null;
-
-    }
-
-    if(bonusInterval){
-
-      clearInterval(bonusInterval);
-      bonusInterval = null;
-
-    }
-
-    if(withdrawalInterval){
-
-      clearInterval(withdrawalInterval);
-      withdrawalInterval = null;
-
-    }
-
-    document
-      .getElementById("authForm")
-      .reset();
-
-    showAuth("login");
-
-  });
+document
+  .getElementById("dashboardLogoutBtn")
+  .addEventListener(
+    "click",
+    logoutUser
+  );
 
 /* =========================================================
    UTILS
