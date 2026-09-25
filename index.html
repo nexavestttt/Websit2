@@ -161,8 +161,6 @@ button{
   top:0;
   bottom:0;
   z-index:20;
-  display:flex;
-  flex-direction:column;
 }
 
 .sidebar-logo{
@@ -191,18 +189,6 @@ button{
 
 .nav-item.active{
   border-left:3px solid var(--green);
-}
-
-/* SIDEBAR LOGOUT */
-
-.sidebar-logout{
-  margin-top:auto;
-  color:#ff8a94;
-}
-
-.sidebar-logout:hover{
-  background:rgba(255,95,109,.10);
-  color:#ffb0b7;
 }
 
 .main{
@@ -485,6 +471,36 @@ button{
   font-weight:800;
 }
 
+.withdrawal-details-hidden{
+  display:block;
+}
+
+.withdrawal-details-visible{
+  display:block;
+}
+
+.withdrawal-button-hidden{
+  display:none!important;
+}
+
+.withdrawal-button-visible{
+  display:block;
+}
+
+.fee-instruction{
+  color:var(--muted);
+  line-height:1.6;
+  margin-top:10px;
+  font-size:13px;
+}
+
+.fee-payment-status{
+  margin-top:10px;
+  color:var(--green);
+  font-size:13px;
+  font-weight:700;
+}
+
 /* HISTORY */
 
 .table-wrap{
@@ -599,16 +615,6 @@ td{
   display:none;
 }
 
-.mobile-logout{
-  color:#ff8a94!important;
-}
-
-.mobile-logout:hover,
-.mobile-logout.active{
-  color:#ffb0b7!important;
-  background:rgba(255,95,109,.06)!important;
-}
-
 @media(max-width:1000px){
   .grid{
     grid-template-columns:repeat(2,1fr);
@@ -720,558 +726,569 @@ td{
     <div class="logo">Nexa<span>Vest</span></div>
 
     <div class="auth-subtitle" id="authSubtitle">
-      Create your account to continue
+      Create your account to get started.
     </div>
 
-    <form id="authForm">
+    <form id="registerForm">
 
-      <div id="nameGroup" class="form-group">
-        <label id="labelFullName">Full Name</label>
-        <input id="authName" type="text" placeholder="Full name">
+      <div class="form-group">
+        <label data-i18n="fullName">Full Name</label>
+        <input
+          id="registerName"
+          type="text"
+          data-i18n-placeholder="fullNamePlaceholder"
+          placeholder="Full name"
+          required
+        >
       </div>
 
       <div class="form-group">
-        <label id="labelEmail">Email</label>
-        <input id="authEmail" type="email" required placeholder="Email address">
+        <label data-i18n="email">Email</label>
+        <input
+          id="registerEmail"
+          type="email"
+          data-i18n-placeholder="emailPlaceholder"
+          placeholder="Email address"
+          required
+        >
       </div>
 
       <div class="form-group">
-        <label id="labelPassword">Password</label>
-        <input id="authPassword" type="password" required placeholder="Password">
+        <label data-i18n="password">Password</label>
+        <input
+          id="registerPassword"
+          type="password"
+          data-i18n-placeholder="passwordPlaceholder"
+          placeholder="Password"
+          required
+        >
       </div>
 
-      <div id="countryGroup" class="form-group">
-        <label id="labelCountry">Country</label>
-
-        <select id="authCountry">
+      <div class="form-group">
+        <label data-i18n="country">Country</label>
+        <select id="registerCountry" required>
           <option value="">Select country</option>
-          <option value="Peru">Peru</option>
-          <option value="Ecuador">Ecuador</option>
-          <option value="Mexico">Mexico</option>
-          <option value="El Salvador">El Salvador</option>
-          <option value="Brazil">Brazil</option>
-          <option value="Colombia">Colombia</option>
-          <option value="Venezuela">Venezuela</option>
-          <option value="Guatemala">Guatemala</option>
-          <option value="Nigeria">Nigeria</option>
-          <option value="South Africa">South Africa</option>
-          <option value="Kenya">Kenya</option>
-          <option value="Ghana">Ghana</option>
-          <option value="Tanzania">Tanzania</option>
-          <option value="Uganda">Uganda</option>
-          <option value="Rwanda">Rwanda</option>
+          <option>Nigeria</option>
+          <option>United States</option>
+          <option>United Kingdom</option>
+          <option>Canada</option>
+          <option>Spain</option>
+          <option>Mexico</option>
+          <option>Colombia</option>
+          <option>Chile</option>
+          <option>Argentina</option>
+          <option>Brazil</option>
+          <option>France</option>
+          <option>Germany</option>
+          <option>Italy</option>
+          <option>Portugal</option>
+          <option>South Africa</option>
+          <option>Ghana</option>
+          <option>Kenya</option>
         </select>
       </div>
 
-      <button id="authSubmit" type="submit" class="primary-btn">
+      <button class="primary-btn" type="submit">
         Create Account
       </button>
 
     </form>
 
+    <form id="loginForm" class="hidden">
+
+      <div class="form-group">
+        <label data-i18n="email">Email</label>
+        <input
+          id="loginEmail"
+          type="email"
+          data-i18n-placeholder="emailPlaceholder"
+          placeholder="Email address"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label data-i18n="password">Password</label>
+        <input
+          id="loginPassword"
+          type="password"
+          data-i18n-placeholder="passwordPlaceholder"
+          placeholder="Password"
+          required
+        >
+      </div>
+
+      <button class="primary-btn" type="submit">
+        Login
+      </button>
+
+    </form>
+
     <div class="auth-switch">
-      <span id="authSwitchText">Already have an account?</span>
-      <button id="authSwitch" type="button">Login</button>
+
+      <span id="authSwitchText">
+        Already have an account?
+      </span>
+
+      <button id="authSwitchBtn" type="button">
+        Login
+      </button>
+
     </div>
 
   </div>
+
 </div>
+
 
 <!-- APP -->
 <div id="app" class="app hidden">
 
+  <!-- SIDEBAR -->
   <aside class="sidebar">
 
     <div class="sidebar-logo">
       <div class="logo">Nexa<span>Vest</span></div>
     </div>
 
-    <button class="nav-item active" data-page="dashboard" type="button">
-      📊 <span id="navDashboard">Dashboard</span>
-    </button>
-
-    <button class="nav-item" data-page="miner" type="button">
-      ⛏️ <span id="navMiner">BTC Miner</span>
-    </button>
-
-    <button class="nav-item" data-page="bonus" type="button">
-      🎁 <span id="navBonus">Bonus</span>
-    </button>
-
-    <button class="nav-item" data-page="withdrawal" type="button">
-      💸 <span id="navWithdrawal">Withdrawal</span>
-    </button>
-
-    <button class="nav-item" data-page="history" type="button">
-      📜 <span id="navHistory">History</span>
-    </button>
-
-    <button class="nav-item" data-page="settings" type="button">
-      ⚙️ <span id="navSettings">Settings</span>
-    </button>
-
-    <!-- ADDED: SIDEBAR LOGOUT -->
     <button
-      class="nav-item sidebar-logout"
-      id="sidebarLogoutBtn"
+      class="nav-item active"
+      data-page="dashboard"
+    >
+      <span data-i18n="dashboardNav">🏠 Dashboard</span>
+    </button>
+
+    <button
+      class="nav-item"
+      data-page="miner"
+    >
+      <span data-i18n="minerNav">⛏️ BTC Miner</span>
+    </button>
+
+    <button
+      class="nav-item"
+      data-page="bonus"
+    >
+      <span data-i18n="bonusNav">🎁 Bonus</span>
+    </button>
+
+    <button
+      class="nav-item"
+      data-page="withdraw"
+    >
+      <span data-i18n="withdrawNav">💸 Withdrawal</span>
+    </button>
+
+    <button
+      class="nav-item"
+      data-page="history"
+    >
+      <span data-i18n="historyNav">📋 History</span>
+    </button>
+
+    <button
+      class="nav-item"
+      data-page="settings"
+    >
+      <span data-i18n="settingsNav">⚙️ Settings</span>
+    </button>
+
+    <button
+      id="sidebarLogout"
+      class="nav-item"
       type="button"
     >
-      🚪 <span id="sidebarLogoutText">Logout</span>
+      <span data-i18n="logout">🚪 Logout</span>
     </button>
 
   </aside>
 
+
+  <!-- MAIN -->
   <main class="main">
 
     <div class="topbar">
 
       <div>
-        <div class="page-title" id="pageTitle">Dashboard</div>
+        <div
+          id="pageTitle"
+          class="page-title"
+        >
+          Dashboard
+        </div>
 
-        <div class="page-subtitle" id="pageSubtitle">
-          Welcome back to NexaVest
+        <div
+          id="pageSubtitle"
+          class="page-subtitle"
+        >
+          Overview of your NexaVest account
         </div>
       </div>
 
       <div class="user-chip">
 
-        <div id="userNameTop">User</div>
+        <div
+          id="avatar"
+          class="avatar"
+        >
+          N
+        </div>
 
-        <div class="avatar" id="userAvatar">U</div>
+        <div>
+          <strong id="topUserName">
+            User
+          </strong>
+
+          <div
+            id="topUserEmail"
+            style="font-size:12px;color:var(--muted);"
+          >
+            user@email.com
+          </div>
+        </div>
 
       </div>
 
     </div>
 
-    <!-- DASHBOARD -->
 
-    <section id="page-dashboard" class="page">
+    <!-- DASHBOARD -->
+    <section
+      id="page-dashboard"
+      class="page"
+    >
 
       <div class="grid">
 
         <div class="card">
-          <div class="card-title" id="labelAccountBalance">
+
+          <div
+            class="card-title"
+            data-i18n="accountBalance"
+          >
             Account Balance
           </div>
 
-          <div class="card-value green" id="dashboardBalance">
+          <div
+            id="dashBalance"
+            class="card-value green"
+          >
             $0.00
           </div>
+
         </div>
 
+
         <div class="card">
-          <div class="card-title" id="labelBonusBalance">
+
+          <div
+            class="card-title"
+            data-i18n="bonusBalance"
+          >
             Bonus Balance
           </div>
 
-          <div class="card-value gold" id="dashboardBonus">
+          <div
+            id="dashBonus"
+            class="card-value gold"
+          >
             $0.00
           </div>
+
         </div>
 
+
         <div class="card">
-          <div class="card-title" id="labelMiningEarnings">
-            Mining Earnings
+
+          <div
+            class="card-title"
+            data-i18n="minedEarnings"
+          >
+            Mined Earnings
           </div>
 
-          <div class="card-value blue" id="dashboardMining">
+          <div
+            id="dashMined"
+            class="card-value blue"
+          >
             $0.00
           </div>
+
         </div>
 
+
         <div class="card">
-          <div class="card-title" id="labelTransactions">
-            Transactions
+
+          <div
+            class="card-title"
+            data-i18n="miningStatus"
+          >
+            Mining Status
           </div>
 
-          <div class="card-value" id="dashboardTransactions">
-            0
+          <div
+            id="dashMiningStatus"
+            class="card-value"
+          >
+            Inactive
           </div>
+
         </div>
 
       </div>
+
 
       <div class="section">
 
         <div class="section-header">
-          <div class="section-title" id="accountOverviewTitle">
+
+          <div
+            class="section-title"
+            data-i18n="accountOverview"
+          >
             Account Overview
           </div>
+
         </div>
+
 
         <div class="card">
 
-          <div class="fee-row">
-            <span id="overviewAccountNameLabel">Account Name</span>
-            <strong id="overviewName">—</strong>
-          </div>
+          <div
+            style="display:grid;grid-template-columns:repeat(2,1fr);gap:15px;"
+          >
 
-          <div class="fee-row">
-            <span id="overviewEmailLabel">Email</span>
-            <strong id="overviewEmail">—</strong>
-          </div>
+            <div>
+              <div class="card-title">Name</div>
+              <strong id="overviewName">-</strong>
+            </div>
 
-          <div class="fee-row">
-            <span id="overviewCountryLabel">Country</span>
-            <strong id="overviewCountry">—</strong>
-          </div>
+            <div>
+              <div class="card-title">Email</div>
+              <strong id="overviewEmail">-</strong>
+            </div>
 
-          <div class="fee-row">
-            <span id="overviewMiningLabel">Mining Status</span>
+            <div>
+              <div class="card-title">Country</div>
+              <strong id="overviewCountry">-</strong>
+            </div>
 
-            <strong id="overviewMiningStatus" class="green">
-              Not Running
-            </strong>
+            <div>
+              <div class="card-title">Member Since</div>
+              <strong id="overviewDate">-</strong>
+            </div>
+
           </div>
 
         </div>
 
       </div>
 
+
+      <div class="section">
+
+        <div class="card">
+
+          <div class="section-header">
+
+            <div class="section-title">
+              Quick Actions
+            </div>
+
+          </div>
+
+          <div
+            style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;"
+          >
+
+            <button
+              class="secondary-btn"
+              data-page-action="miner"
+              type="button"
+            >
+              ⛏️ Start Mining
+            </button>
+
+            <button
+              class="secondary-btn"
+              data-page-action="bonus"
+              type="button"
+            >
+              🎁 View Bonus
+            </button>
+
+            <button
+              class="secondary-btn"
+              data-page-action="withdraw"
+              type="button"
+            >
+              💸 Withdraw
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
       <div class="section">
 
         <button
-          id="dashboardLogoutBtn"
-          type="button"
+          id="dashboardLogout"
           class="secondary-btn"
-          style="
-            display:block;
-            width:100%;
-            margin-top:20px;
-            padding:14px;
-            background:#182b40;
-            color:#ffffff;
-            border:1px solid rgba(255,255,255,.15);
-            border-radius:12px;
-            font-weight:800;
-            text-align:center;
-            cursor:pointer;
-          "
+          type="button"
+          style="width:100%;"
         >
-          Logout
+          🚪 Logout
         </button>
 
       </div>
 
     </section>
 
-    <!-- MINER -->
 
-    <section id="page-miner" class="page hidden">
+    <!-- MINER -->
+    <section
+      id="page-miner"
+      class="page hidden"
+    >
 
       <div class="card miner-box">
 
-        <div class="section-header">
-
-          <div>
-            <div class="section-title" id="minerTitle">
-              BTC Miner
-            </div>
-
-            <div class="page-subtitle" id="minerSubtitle">
-              Start a 48-hour mining cycle
-            </div>
-          </div>
-
+        <div
+          class="section-title"
+          data-i18n="miner"
+        >
+          BTC Miner
         </div>
 
-        <div class="miner-warning" id="minerWarning">
-          Once mining starts, the selected amount,
-          uploaded proof and Start Mining button remain
-          locked for the full 48-hour mining cycle.
+        <div
+          class="miner-warning"
+        >
+          Mining runs for the configured cycle and earnings are added to your account when the cycle is completed.
         </div>
+
 
         <div class="miner-stats">
 
           <div class="miner-stat">
-            <small id="minerAmountLabel">Mining Amount</small>
-            <strong id="minerAmountDisplay">$0.00</strong>
-          </div>
 
-          <div class="miner-stat">
-            <small id="minerTargetLabel">Target</small>
-            <strong class="green" id="minerTargetDisplay">$0.00</strong>
-          </div>
+            <small>Mining Amount</small>
 
-          <div class="miner-stat">
-            <small id="minerCurrentLabel">Current Earnings</small>
-            <strong class="blue" id="minerEarningsDisplay">$0.00</strong>
-          </div>
-
-        </div>
-
-        <div class="progress-wrap">
-          <div id="minerProgress" class="progress"></div>
-        </div>
-
-        <div id="minerProgressText" style="color:var(--muted);font-size:13px;">
-          0%
-        </div>
-
-        <div id="minerTimer" class="timer">
-          48:00:00
-        </div>
-
-        <div id="minerLockMessage" class="lock-message">
-          Mining is active. Your mining settings are locked
-          until the 48-hour cycle is complete.
-        </div>
-
-        <div class="miner-form">
-
-          <label id="minerAmountInputLabel">
-            Mining Amount
-          </label>
-
-          <input
-            id="minerAmount"
-            type="number"
-            min="25"
-            placeholder="Minimum $25"
-          >
-
-          <label id="minerProofLabel">
-            Upload Proof
-          </label>
-
-          <input
-            id="minerProof"
-            type="file"
-            accept="image/*,.pdf"
-          >
-
-          <div id="proofName" class="proof-name">
-            No proof selected.
-          </div>
-
-          <button
-            id="startMiningBtn"
-            class="primary-btn"
-            style="margin-top:18px;"
-            type="button"
-          >
-            Start Mining
-          </button>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- BONUS -->
-
-    <section id="page-bonus" class="page hidden">
-
-      <div class="card bonus-box">
-
-        <div class="section-title" id="bonusTitle">
-          Bonus
-        </div>
-
-        <div class="page-subtitle" id="bonusSubtitle">
-          Your registration bonus
-        </div>
-
-        <div id="bonusAmount" class="bonus-amount">
-          $0.00
-        </div>
-
-        <div style="color:var(--muted);margin-bottom:8px;" id="bonusRefreshLabel">
-          Next bonus refresh
-        </div>
-
-        <div id="bonusCountdown" class="countdown">
-          00:00:00
-        </div>
-
-        <button
-          id="bonusWithdrawBtn"
-          class="primary-btn"
-          style="margin-top:25px;"
-          type="button"
-        >
-          Withdraw Bonus
-        </button>
-
-      </div>
-
-    </section>
-
-    <!-- WITHDRAWAL -->
-
-    <section id="page-withdrawal" class="page hidden">
-
-      <div class="card withdraw-box">
-
-        <div class="section-title" id="withdrawalTitle">
-          Withdrawal
-        </div>
-
-        <div class="page-subtitle" id="withdrawalSubtitle">
-          Enter your withdrawal details
-        </div>
-
-        <div class="balance-large green" id="withdrawBalance">
-          $0.00
-        </div>
-
-        <div class="form-group">
-
-          <label id="withdrawSourceLabel">
-            Withdrawal Source
-          </label>
-
-          <select id="withdrawSource">
-
-            <option value="miner" id="withdrawMinerOption">
-              Miner / Account Balance
-            </option>
-
-            <option value="bonus" id="withdrawBonusOption">
-              Bonus Balance
-            </option>
-
-          </select>
-
-        </div>
-
-        <div class="form-group">
-
-          <label id="withdrawAmountLabel">
-            Withdrawal Amount
-          </label>
-
-          <input
-            id="withdrawAmount"
-            type="number"
-            min="1"
-            placeholder="Enter amount"
-          >
-
-        </div>
-
-        <div class="form-group">
-
-          <label id="withdrawBankLabel">
-            Bank
-          </label>
-
-          <select id="withdrawBank">
-            <option value="">Select bank</option>
-          </select>
-
-        </div>
-
-        <div class="form-group">
-
-          <label id="withdrawAccountLabel">
-            Account Number
-          </label>
-
-          <input
-            id="withdrawAccount"
-            type="text"
-            placeholder="Account number"
-          >
-
-        </div>
-
-        <div class="form-group">
-
-          <label id="withdrawNameLabel">
-            Account Name
-          </label>
-
-          <input
-            id="withdrawName"
-            type="text"
-            placeholder="Account holder name"
-          >
-
-        </div>
-
-        <div class="fee-box">
-
-          <div class="fee-row">
-
-            <span id="withdrawFeeLabel">
-              Withdrawal Fee
-            </span>
-
-            <strong id="withdrawFee">
-              $200.00
-            </strong>
-
-          </div>
-
-          <div class="fee-row net">
-
-            <span id="withdrawNetLabel">
-              Net Amount
-            </span>
-
-            <strong id="withdrawNet">
+            <strong
+              id="minerAmountDisplay"
+              class="green"
+            >
               $0.00
             </strong>
 
           </div>
 
-        </div>
 
-        <!-- WITHDRAWAL BUTTON REMAINS VISIBLE -->
-        <button
-          id="submitWithdrawalBtn"
-          class="primary-btn"
-          type="button"
-        >
-          Submit Withdrawal
-        </button>
+          <div class="miner-stat">
 
-      </div>
+            <small>Current Earnings</small>
 
-    </section>
+            <strong
+              id="minerEarningsDisplay"
+              class="blue"
+            >
+              $0.00
+            </strong>
 
-    <!-- HISTORY -->
+          </div>
 
-    <section id="page-history" class="page hidden">
 
-      <div class="card">
+          <div class="miner-stat">
 
-        <div class="section-header">
+            <small>Status</small>
 
-          <div class="section-title" id="historyTitle">
-            Transaction History
+            <strong id="minerStatusDisplay">
+              Inactive
+            </strong>
+
           </div>
 
         </div>
 
-        <div
-          id="historyEmpty"
-          style="color:var(--muted);padding:20px 0;"
-        >
-          No transactions yet.
+
+        <div class="progress-wrap">
+
+          <div
+            id="minerProgress"
+            class="progress"
+          ></div>
+
         </div>
 
-        <div id="historyTable" class="table-wrap hidden">
+        <div
+          id="minerProgressText"
+          style="font-size:12px;color:var(--muted);"
+        >
+          0%
+        </div>
 
-          <table>
 
-            <thead>
-              <tr>
-                <th id="thId">ID</th>
-                <th id="thDate">Date</th>
-                <th id="thAmount">Amount</th>
-                <th id="thFee">Fee</th>
-                <th id="thNet">Net</th>
-                <th id="thStatus">Status</th>
-                <th id="thAction">Action</th>
-              </tr>
-            </thead>
+        <div
+          id="minerTimer"
+          class="timer"
+        >
+          00:00:00
+        </div>
 
-            <tbody id="historyBody"></tbody>
 
-          </table>
+        <div
+          id="minerLockMessage"
+          class="lock-message"
+        >
+          Mining is currently locked.
+        </div>
+
+
+        <div class="miner-form">
+
+          <label>
+            Mining Amount
+          </label>
+
+          <div class="amount-row">
+
+            <input
+              id="minerAmount"
+              type="number"
+              min="1"
+              step=".01"
+              placeholder="Enter mining amount"
+            >
+
+            <button
+              id="startMiningBtn"
+              class="primary-btn"
+              type="button"
+            >
+              Start Mining
+            </button>
+
+          </div>
+
+
+          <label>
+            Upload Proof
+          </label>
+
+          <input
+            id="miningProof"
+            type="file"
+            accept="image/*"
+          >
+
+          <div
+            id="miningProofName"
+            class="proof-name"
+          >
+            No proof selected
+          </div>
 
         </div>
 
@@ -1279,76 +1296,381 @@ td{
 
     </section>
 
-    <!-- SETTINGS -->
 
-    <section id="page-settings" class="page hidden">
+    <!-- BONUS -->
+    <section
+      id="page-bonus"
+      class="page hidden"
+    >
+
+      <div class="card bonus-box">
+
+        <div
+          class="section-title"
+          data-i18n="bonusTitle"
+        >
+          Bonus
+        </div>
+
+        <div
+          id="bonusAmount"
+          class="bonus-amount"
+        >
+          $0.00
+        </div>
+
+        <div
+          style="color:var(--muted);margin-bottom:8px;"
+        >
+          Available Bonus
+        </div>
+
+        <div
+          id="bonusCountdown"
+          class="countdown"
+        >
+          00:00:00
+        </div>
+
+        <div
+          id="bonusMessage"
+          style="color:var(--muted);margin-top:10px;"
+        >
+          Your bonus information will appear here.
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- WITHDRAW -->
+    <section
+      id="page-withdraw"
+      class="page hidden"
+    >
+
+      <div class="card withdraw-box">
+
+        <div
+          class="section-title"
+          data-i18n="withdrawalTitle"
+        >
+          Withdrawal
+        </div>
+
+        <div
+          style="color:var(--muted);margin-top:8px;"
+        >
+          Available Balance
+        </div>
+
+        <div
+          id="withdrawBalance"
+          class="balance-large green"
+        >
+          $0.00
+        </div>
+
+
+        <div class="fee-box withdrawal-fee-gate">
+
+          <div class="fee-row">
+
+            <span>
+              Required Withdrawal Fee
+            </span>
+
+            <strong id="withdrawalGateFee">
+              $200.00
+            </strong>
+
+          </div>
+
+
+          <p class="fee-instruction">
+            Pay the withdrawal fee and upload the payment proof before the withdrawal button shows. Your bank details and other withdrawal settings will remain visible.
+          </p>
+
+
+          <div
+            class="form-group"
+            style="margin-top:15px;margin-bottom:0;"
+          >
+
+            <label>
+              Upload Payment Proof
+            </label>
+
+            <input
+              id="feePaymentImage"
+              type="file"
+              accept="image/*"
+            >
+
+          </div>
+
+
+          <div
+            id="feePaymentStatus"
+            class="fee-payment-status"
+          ></div>
+
+        </div>
+
+
+        <!-- BANK DETAILS REMAIN VISIBLE -->
+        <div
+          id="withdrawalDetails"
+          class="withdrawal-details-hidden"
+        >
+
+          <div class="form-group">
+
+            <label data-i18n="withdrawalAmount">
+              Withdrawal Amount
+            </label>
+
+            <input
+              id="withdrawAmount"
+              type="number"
+              min="1"
+              step=".01"
+              placeholder="Enter amount"
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label data-i18n="bank">
+              Bank
+            </label>
+
+            <select id="withdrawBank"></select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label data-i18n="accountNumber">
+              Account Number
+            </label>
+
+            <input
+              id="withdrawAccount"
+              type="text"
+              placeholder="Account number"
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label data-i18n="accountName">
+              Account Name
+            </label>
+
+            <input
+              id="withdrawName"
+              type="text"
+              placeholder="Account holder name"
+            />
+
+          </div>
+
+
+          <div class="fee-box">
+
+            <div class="fee-row">
+
+              <span data-i18n="withdrawalAmount">
+                Withdrawal Amount
+              </span>
+
+              <strong id="feeGross">
+                $0.00
+              </strong>
+
+            </div>
+
+
+            <div class="fee-row">
+
+              <span data-i18n="withdrawalFee">
+                Withdrawal Fee
+              </span>
+
+              <strong id="withdrawalFeeDisplay">
+                $200.00
+              </strong>
+
+            </div>
+
+
+            <div class="fee-row net">
+
+              <span data-i18n="netAmount">
+                Amount to Receive
+              </span>
+
+              <strong id="feeNet">
+                $0.00
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <!-- ONLY THE WITHDRAWAL BUTTON IS HIDDEN UNTIL PROOF -->
+          <div
+            id="withdrawalButtonWrap"
+            class="withdrawal-button-hidden"
+          >
+
+            <button
+              id="withdrawBtn"
+              class="primary-btn"
+              type="button"
+            >
+              Submit Withdrawal
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- HISTORY -->
+    <section
+      id="page-history"
+      class="page hidden"
+    >
+
+      <div
+        class="section-title"
+        data-i18n="transactionHistory"
+        style="margin-bottom:15px;"
+      >
+        Transaction History
+      </div>
+
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>Date</th>
+              <th>Type</th>
+              <th>Source</th>
+              <th>Amount</th>
+              <th>Fee</th>
+              <th>Net</th>
+              <th>Status</th>
+              <th>Action</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody id="historyBody"></tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+
+    <!-- SETTINGS -->
+    <section
+      id="page-settings"
+      class="page hidden"
+    >
 
       <div class="card settings-box">
 
-        <div class="section-title" id="settingsTitle">
+        <div
+          class="section-title"
+          data-i18n="settings"
+        >
           Settings
         </div>
 
-        <div class="page-subtitle" id="settingsSubtitle">
-          Select your preferred language
+
+        <div style="margin-top:20px;">
+
+          <div
+            class="card-title"
+            data-i18n="language"
+          >
+            Language
+          </div>
+
+
+          <div class="language-grid">
+
+            <button
+              class="lang-btn active"
+              data-lang="en"
+              type="button"
+            >
+              🇬🇧 English
+            </button>
+
+            <button
+              class="lang-btn"
+              data-lang="es"
+              type="button"
+            >
+              🇪🇸 Español
+            </button>
+
+            <button
+              class="lang-btn"
+              data-lang="pt"
+              type="button"
+            >
+              🇵🇹 Português
+            </button>
+
+            <button
+              class="lang-btn"
+              data-lang="fr"
+              type="button"
+            >
+              🇫🇷 Français
+            </button>
+
+          </div>
+
         </div>
 
-        <div class="language-grid">
+
+        <div style="margin-top:25px;">
 
           <button
-            class="lang-btn active"
-            data-lang="en"
+            id="settingsLogout"
+            class="secondary-btn"
             type="button"
+            style="width:100%;"
           >
-            🇬🇧 English
-          </button>
-
-          <button
-            class="lang-btn"
-            data-lang="es"
-            type="button"
-          >
-            🇪🇸 Español
-          </button>
-
-          <button
-            class="lang-btn"
-            data-lang="pt"
-            type="button"
-          >
-            🇧🇷 Português
-          </button>
-
-          <button
-            class="lang-btn"
-            data-lang="fr"
-            type="button"
-          >
-            🇫🇷 Français
+            🚪 Logout
           </button>
 
         </div>
-
-        <button
-          id="logoutBtn"
-          type="button"
-          class="secondary-btn"
-          style="
-            display:block;
-            width:100%;
-            margin-top:25px;
-            padding:14px;
-            background:#182b40;
-            color:#ffffff;
-            border:1px solid rgba(255,255,255,.15);
-            border-radius:12px;
-            font-weight:800;
-            text-align:center;
-            cursor:pointer;
-          "
-        >
-          Logout
-        </button>
 
       </div>
 
@@ -1356,88 +1678,123 @@ td{
 
   </main>
 
-  <!-- MOBILE NAV -->
+</div>
 
-  <nav class="mobile-nav">
 
-    <button data-page="dashboard" class="active" type="button">
-      📊
-      <br>
-      <span id="mobileDashboard">Dashboard</span>
-    </button>
+<!-- MOBILE NAV -->
+<div
+  id="mobileNav"
+  class="mobile-nav hidden"
+>
 
-    <button data-page="miner" type="button">
-      ⛏️
-      <br>
-      <span id="mobileMiner">Miner</span>
-    </button>
+  <button
+    data-page="dashboard"
+    class="active"
+    type="button"
+  >
+    🏠
+    <br>
+    Dashboard
+  </button>
 
-    <button data-page="bonus" type="button">
-      🎁
-      <br>
-      <span id="mobileBonus">Bonus</span>
-    </button>
+  <button
+    data-page="miner"
+    type="button"
+  >
+    ⛏️
+    <br>
+    Miner
+  </button>
 
-    <button data-page="withdrawal" type="button">
-      💸
-      <br>
-      <span id="mobileWithdraw">Withdraw</span>
-    </button>
+  <button
+    data-page="bonus"
+    type="button"
+  >
+    🎁
+    <br>
+    Bonus
+  </button>
 
-    <button data-page="history" type="button">
-      📜
-      <br>
-      <span id="mobileHistory">History</span>
-    </button>
+  <button
+    data-page="withdraw"
+    type="button"
+  >
+    💸
+    <br>
+    Withdraw
+  </button>
 
-    <button data-page="settings" type="button">
-      ⚙️
-      <br>
-      <span id="mobileSettings">Settings</span>
-    </button>
+  <button
+    data-page="history"
+    type="button"
+  >
+    📋
+    <br>
+    History
+  </button>
 
-    <!-- ADDED: MOBILE LOGOUT -->
-    <button
-      id="mobileLogoutBtn"
-      class="mobile-logout"
-      type="button"
-    >
-      🚪
-      <br>
-      <span id="mobileLogoutText">Logout</span>
-    </button>
+  <button
+    data-page="settings"
+    type="button"
+  >
+    ⚙️
+    <br>
+    Settings
+  </button>
 
-  </nav>
+  <button
+    id="mobileLogout"
+    type="button"
+  >
+    🚪
+    <br>
+    <span id="mobileLogoutText">
+      Logout
+    </span>
+  </button>
 
 </div>
 
-<!-- TRANSACTION MODAL -->
 
-<div id="transactionModal" class="modal hidden">
+<!-- TRANSACTION MODAL -->
+<div
+  id="transactionModal"
+  class="modal hidden"
+>
 
   <div class="modal-box">
 
-    <div class="section-title" id="transactionRecordTitle">
-      Transaction Record
-    </div>
+    <div
+      style="display:flex;justify-content:space-between;align-items:center;"
+    >
 
-    <div id="transactionDetails" style="margin-top:18px;"></div>
-
-    <div class="modal-actions">
+      <div
+        class="section-title"
+        data-i18n="transactionRecord"
+      >
+        Transaction Record
+      </div>
 
       <button
         id="closeModal"
         class="secondary-btn"
         type="button"
       >
-        Close
+        ✕
       </button>
 
     </div>
 
+
+    <div
+      id="transactionModalBody"
+      style="margin-top:18px;"
+    ></div>
+
   </div>
 
 </div>
+
 
 <script>
 
@@ -1449,6 +1806,7 @@ const STORAGE_USERS = "nexavestUsers";
 const STORAGE_CURRENT = "nexavestCurrentUser";
 const STORAGE_LANG = "nexavestLanguage";
 
+
 /* =========================================================
    FEES - INTERNAL USD VALUES
    ========================================================= */
@@ -1456,385 +1814,91 @@ const STORAGE_LANG = "nexavestLanguage";
 const MINER_WITHDRAWAL_FEE = 200;
 const BONUS_WITHDRAWAL_FEE = 100;
 
+
 /* =========================================================
-   DURATIONS
+   MINING SETTINGS
    ========================================================= */
 
-const MINING_DURATION = 48 * 60 * 60 * 1000;
+const MINING_DURATION = 3 * 60 * 60 * 1000;
+const MINING_RATE = 0.001;
+
+
+/* =========================================================
+   WITHDRAWAL SETTINGS
+   ========================================================= */
+
 const WITHDRAWAL_PENDING_DURATION = 3 * 60 * 1000;
+
 
 /* =========================================================
    STATE
    ========================================================= */
 
-let authMode = "register";
-let currentTransaction = null;
-let bonusInterval = null;
-let minerInterval = null;
-let withdrawalInterval = null;
+let withdrawalSource = "miner";
+let minerTimer = null;
+let bonusTimer = null;
+let withdrawalStatusTimer = null;
 
-/* =========================================================
-   CURRENCIES
-   ========================================================= */
-
-const countryCurrency = {
-
-  Peru:{
-    code:"PEN",
-    symbol:"S/",
-    rate:3.50
-  },
-
-  Ecuador:{
-    code:"USD",
-    symbol:"$",
-    rate:1
-  },
-
-  Mexico:{
-    code:"MXN",
-    symbol:"$",
-    rate:18
-  },
-
-  "El Salvador":{
-    code:"USD",
-    symbol:"$",
-    rate:1
-  },
-
-  Brazil:{
-    code:"BRL",
-    symbol:"R$",
-    rate:5.40
-  },
-
-  Colombia:{
-    code:"COP",
-    symbol:"$",
-    rate:4000
-  },
-
-  Venezuela:{
-    code:"VES",
-    symbol:"Bs.",
-    rate:170
-  },
-
-  Guatemala:{
-    code:"GTQ",
-    symbol:"Q",
-    rate:7.70
-  },
-
-  Nigeria:{
-    code:"NGN",
-    symbol:"₦",
-    rate:1500
-  },
-
-  "South Africa":{
-    code:"ZAR",
-    symbol:"R",
-    rate:17
-  },
-
-  Kenya:{
-    code:"KES",
-    symbol:"KSh",
-    rate:129
-  },
-
-  Ghana:{
-    code:"GHS",
-    symbol:"GH₵",
-    rate:12
-  },
-
-  Tanzania:{
-    code:"TZS",
-    symbol:"TSh",
-    rate:2500
-  },
-
-  Uganda:{
-    code:"UGX",
-    symbol:"USh",
-    rate:3700
-  },
-
-  Rwanda:{
-    code:"RWF",
-    symbol:"FRw",
-    rate:1450
-  }
-
-};
-
-/* =========================================================
-   COUNTRY -> LANGUAGE
-   ========================================================= */
-
-const countryLanguage = {
-
-  Peru:"es",
-  Ecuador:"es",
-  Mexico:"es",
-  "El Salvador":"es",
-  Brazil:"pt",
-  Colombia:"es",
-  Venezuela:"es",
-  Guatemala:"es",
-  Nigeria:"en",
-  "South Africa":"en",
-  Kenya:"en",
-  Ghana:"en",
-  Tanzania:"en",
-  Uganda:"en",
-  Rwanda:"fr"
-
-};
-
-function getLanguageForCountry(country){
-
-  return countryLanguage[country] || "en";
-
-}
 
 /* =========================================================
    BANKS
    ========================================================= */
 
-const countryBanks = {
+const banks = [
 
-  Peru:[
-    "Banco de Crédito del Perú (BCP)",
-    "BBVA",
-    "Interbank",
-    "Scotiabank"
-  ],
+  "Access Bank",
+  "Citibank Nigeria",
+  "Ecobank Nigeria",
+  "Fidelity Bank",
+  "First Bank of Nigeria",
+  "First City Monument Bank",
+  "Globus Bank",
+  "Guaranty Trust Bank",
+  "Heritage Bank",
+  "Jaiz Bank",
+  "Keystone Bank",
+  "Kuda Bank",
+  "Moniepoint",
+  "Opay",
+  "Palmpay",
+  "Polaris Bank",
+  "Providus Bank",
+  "Stanbic IBTC Bank",
+  "Sterling Bank",
+  "Union Bank",
+  "United Bank for Africa",
+  "Unity Bank",
+  "Wema Bank",
+  "Zenith Bank"
 
-  Ecuador:[
-    "Banco Pichincha",
-    "Banco Guayaquil",
-    "Produbanco",
-    "Banco del Pacífico"
-  ],
+];
 
-  Mexico:[
-    "BBVA México",
-    "Banorte",
-    "Santander",
-    "HSBC México"
-  ],
-
-  "El Salvador":[
-    "Banco Agrícola",
-    "Banco Cuscatlán",
-    "BAC Credomatic",
-    "Davivienda"
-  ],
-
-  Brazil:[
-    "Nubank",
-    "Itaú",
-    "Bradesco",
-    "Banco do Brasil"
-  ],
-
-  Colombia:[
-    "Bancolombia",
-    "Davivienda Colombia",
-    "BBVA Colombia",
-    "Banco de Bogotá"
-  ],
-
-  Venezuela:[
-    "Banco de Venezuela",
-    "Banesco",
-    "Mercantil",
-    "BBVA Provincial"
-  ],
-
-  Guatemala:[
-    "Banco Industrial",
-    "Banrural",
-    "G&T Continental",
-    "BAC Guatemala"
-  ],
-
-  Nigeria:[
-    "Access Bank",
-    "GTBank",
-    "UBA",
-    "Zenith Bank",
-    "FirstBank",
-    "Fidelity Bank",
-    "Wema Bank"
-  ],
-
-  "South Africa":[
-    "Capitec",
-    "Standard Bank",
-    "FNB",
-    "Absa",
-    "Nedbank"
-  ],
-
-  Kenya:[
-    "KCB",
-    "Equity Bank",
-    "Co-operative Bank",
-    "Absa Kenya"
-  ],
-
-  Ghana:[
-    "GCB Bank",
-    "Ecobank Ghana",
-    "Absa Ghana",
-    "Stanbic Bank Ghana"
-  ],
-
-  Tanzania:[
-    "CRDB Bank",
-    "NMB Bank",
-    "NBC",
-    "Absa Tanzania"
-  ],
-
-  Uganda:[
-    "Stanbic Uganda",
-    "Centenary Bank",
-    "Absa Uganda",
-    "DFCU Bank"
-  ],
-
-  Rwanda:[
-    "Bank of Kigali",
-    "I&M Bank Rwanda",
-    "Equity Bank Rwanda",
-    "BPR Bank Rwanda"
-  ]
-
-};
 
 /* =========================================================
-   CURRENCY FUNCTIONS
+   DOM
    ========================================================= */
 
-function getCurrency(country){
+const authPage =
+  document.getElementById("authPage");
 
-  return countryCurrency[country] || {
-    code:"USD",
-    symbol:"$",
-    rate:1
-  };
+const app =
+  document.getElementById("app");
 
-}
+const registerForm =
+  document.getElementById("registerForm");
 
-function getCurrencyDecimals(user){
+const loginForm =
+  document.getElementById("loginForm");
 
-  const currency =
-    getCurrency(user && user.country);
+const authSwitchBtn =
+  document.getElementById("authSwitchBtn");
 
-  if(
-    currency.code === "COP" ||
-    currency.code === "VES" ||
-    currency.code === "TZS" ||
-    currency.code === "UGX" ||
-    currency.code === "RWF"
-  ){
-    return 0;
-  }
+const authSwitchText =
+  document.getElementById("authSwitchText");
 
-  return 2;
+const authSubtitle =
+  document.getElementById("authSubtitle");
 
-}
-
-function usdToLocal(usdAmount,user){
-
-  const currency =
-    getCurrency(user && user.country);
-
-  return (
-    Number(usdAmount || 0) *
-    Number(currency.rate || 1)
-  );
-
-}
-
-function localToUSD(localAmount,user){
-
-  const currency =
-    getCurrency(user && user.country);
-
-  const rate =
-    Number(currency.rate || 1);
-
-  return (
-    Number(localAmount || 0) / rate
-  );
-
-}
-
-function formatLocalInputAmount(usdAmount,user){
-
-  return usdToLocal(
-    usdAmount,
-    user
-  ).toFixed(
-    getCurrencyDecimals(user)
-  );
-
-}
-
-function getLocalCurrencyLabel(user){
-
-  const currency =
-    getCurrency(user && user.country);
-
-  return (
-    currency.code +
-    " (" +
-    currency.symbol +
-    ")"
-  );
-
-}
-
-function formatMoney(usdAmount,user){
-
-  const amount =
-    Number(usdAmount || 0);
-
-  const currency =
-    getCurrency(user && user.country);
-
-  const localAmount =
-    amount * currency.rate;
-
-  const decimals =
-    getCurrencyDecimals(user);
-
-  return (
-    currency.symbol +
-    localAmount.toLocaleString(
-      undefined,
-      {
-        minimumFractionDigits:decimals,
-        maximumFractionDigits:decimals
-      }
-    )
-  );
-
-}
-
-function formatUSD(usdAmount){
-
-  return "$" +
-    Number(usdAmount || 0).toFixed(2);
-
-}
 
 /* =========================================================
    STORAGE HELPERS
@@ -1848,13 +1912,14 @@ function getUsers(){
       localStorage.getItem(STORAGE_USERS)
     ) || [];
 
-  }catch(error){
+  }catch(e){
 
     return [];
 
   }
 
 }
+
 
 function saveUsers(users){
 
@@ -1865,1248 +1930,689 @@ function saveUsers(users){
 
 }
 
-function getCurrentUser(){
 
-  const id =
-    localStorage.getItem(STORAGE_CURRENT);
+function getCurrentEmail(){
 
-  if(!id){
-    return null;
-  }
-
-  const users = getUsers();
-
-  return users.find(
-    user => user.id === id
-  ) || null;
-
-}
-
-function saveCurrentUser(user){
-
-  if(!user){
-    return;
-  }
-
-  const users = getUsers();
-
-  const index =
-    users.findIndex(
-      item => item.id === user.id
-    );
-
-  if(index !== -1){
-    users[index] = user;
-  }else{
-    users.push(user);
-  }
-
-  saveUsers(users);
-
-  localStorage.setItem(
-    STORAGE_CURRENT,
-    user.id
+  return localStorage.getItem(
+    STORAGE_CURRENT
   );
 
 }
 
-/* =========================================================
-   RANDOM BONUS
-   ========================================================= */
 
-function generateRandomBonus(){
+function setCurrentEmail(email){
 
-  return Math.floor(
-    Math.random() * (3400 - 600 + 1)
-  ) + 600;
+  if(email){
 
-}
-
-/* =========================================================
-   CREATE USER
-   ========================================================= */
-
-function createUser(name,email,password,country){
-
-  const users = getUsers();
-
-  const normalizedEmail =
-    email.trim().toLowerCase();
-
-  const existing =
-    users.find(
-      user =>
-        String(user.email || "").toLowerCase() ===
-        normalizedEmail
+    localStorage.setItem(
+      STORAGE_CURRENT,
+      email
     );
 
-  if(existing){
+  }else{
 
-    alert(
-      "An account with this email already exists."
+    localStorage.removeItem(
+      STORAGE_CURRENT
     );
-
-    return null;
 
   }
 
-  const randomBonus =
-    generateRandomBonus();
+}
 
-  const userLanguage =
-    getLanguageForCountry(country);
 
-  const user = {
+function getCurrentUser(){
+
+  const email =
+    getCurrentEmail();
+
+  if(!email) return null;
+
+  const users =
+    getUsers();
+
+  return users.find(
+    user =>
+      user.email.toLowerCase() ===
+      email.toLowerCase()
+  ) || null;
+
+}
+
+
+function saveCurrentUser(user){
+
+  const users =
+    getUsers();
+
+  const index =
+    users.findIndex(
+      item =>
+        item.email.toLowerCase() ===
+        user.email.toLowerCase()
+    );
+
+  if(index === -1){
+
+    users.push(user);
+
+  }else{
+
+    users[index] = user;
+
+  }
+
+  saveUsers(users);
+
+  setCurrentEmail(user.email);
+
+}
+
+
+/* =========================================================
+   USER CREATION
+   ========================================================= */
+
+function createUser({
+  name,
+  email,
+  password,
+  country
+}){
+
+  return {
 
     id:
       "USR-" +
-      Date.now().toString(36).toUpperCase() +
       Math.random()
         .toString(36)
-        .substring(2,6)
+        .substring(2,9)
         .toUpperCase(),
 
-    name:name.trim(),
-    email:normalizedEmail,
+    name:name,
+
+    email:email,
+
     password:password,
+
     country:country,
 
-    language:userLanguage,
+    createdAt:
+      new Date().toISOString(),
 
     balance:0,
 
-    bonusBalance:randomBonus,
+    bonusBalance:0,
 
     miner:{
+
       running:false,
+
       amount:0,
-      target:0,
+
       earnings:0,
-      credited:false,
-      progress:0,
+
       startTime:null,
+
       endTime:null,
+
       proofName:""
+
     },
 
     transactions:[]
 
   };
 
-  users.push(user);
-
-  saveUsers(users);
-
-  localStorage.setItem(
-    STORAGE_CURRENT,
-    user.id
-  );
-
-  currentLanguage = userLanguage;
-
-  localStorage.setItem(
-    STORAGE_LANG,
-    userLanguage
-  );
-
-  alert(
-    "Account created successfully. Your registration bonus is " +
-    formatMoney(randomBonus,user) +
-    "."
-  );
-
-  return user;
-
 }
 
-/* =========================================================
-   USER DATA REPAIR
-   ========================================================= */
-
-function repairUser(user){
-
-  if(!user){
-    return null;
-  }
-
-  if(typeof user.name !== "string"){
-    user.name = "";
-  }
-
-  if(!user.email){
-    user.email = "";
-  }
-
-  if(!user.country){
-    user.country = "Ecuador";
-  }
-
-  if(
-    !user.language ||
-    !translations ||
-    !translations[user.language]
-  ){
-
-    user.language =
-      getLanguageForCountry(user.country);
-
-  }
-
-  if(
-    typeof user.balance !== "number" &&
-    typeof user.balance !== "string"
-  ){
-    user.balance = 0;
-  }
-
-  if(
-    typeof user.bonusBalance !== "number" &&
-    typeof user.bonusBalance !== "string"
-  ){
-    user.bonusBalance = 0;
-  }
-
-  if(!user.miner){
-
-    user.miner = {
-      running:false,
-      amount:0,
-      target:0,
-      earnings:0,
-      credited:false,
-      progress:0,
-      startTime:null,
-      endTime:null,
-      proofName:""
-    };
-
-  }
-
-  if(!Array.isArray(user.transactions)){
-    user.transactions = [];
-  }
-
-  saveCurrentUser(user);
-
-  return user;
-
-}
 
 /* =========================================================
-   AUTH
+   AUTH UI
    ========================================================= */
 
 function showAuth(mode){
 
-  authMode = mode;
+  authPage.classList.remove("hidden");
+  app.classList.add("hidden");
 
   document
-    .getElementById("authPage")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("app")
+    .getElementById("mobileNav")
     .classList.add("hidden");
 
-  const nameGroup =
-    document.getElementById("nameGroup");
+  if(mode === "login"){
 
-  const countryGroup =
-    document.getElementById("countryGroup");
+    registerForm.classList.add("hidden");
+    loginForm.classList.remove("hidden");
 
-  const subtitle =
-    document.getElementById("authSubtitle");
+    authSubtitle.textContent =
+      "Login to your NexaVest account.";
 
-  const submit =
-    document.getElementById("authSubmit");
+    authSwitchText.textContent =
+      "Don't have an account?";
 
-  const switchText =
-    document.getElementById("authSwitchText");
-
-  const switchButton =
-    document.getElementById("authSwitch");
-
-  if(mode === "register"){
-
-    nameGroup.classList.remove("hidden");
-    countryGroup.classList.remove("hidden");
-
-    document.getElementById("authName").required = true;
-    document.getElementById("authCountry").required = true;
-
-    subtitle.textContent =
-      getText("authRegisterSubtitle");
-
-    submit.textContent =
-      getText("createAccount");
-
-    switchText.textContent =
-      getText("alreadyAccount");
-
-    switchButton.textContent =
-      getText("login");
+    authSwitchBtn.textContent =
+      "Create Account";
 
   }else{
 
-    nameGroup.classList.add("hidden");
-    countryGroup.classList.add("hidden");
+    registerForm.classList.remove("hidden");
+    loginForm.classList.add("hidden");
 
-    document.getElementById("authName").required = false;
-    document.getElementById("authCountry").required = false;
+    authSubtitle.textContent =
+      "Create your account to get started.";
 
-    subtitle.textContent =
-      getText("authLoginSubtitle");
+    authSwitchText.textContent =
+      "Already have an account?";
 
-    submit.textContent =
-      getText("login");
-
-    switchText.textContent =
-      getText("noAccount");
-
-    switchButton.textContent =
-      getText("register");
+    authSwitchBtn.textContent =
+      "Login";
 
   }
 
 }
 
-function enterApp(){
 
-  const user =
-    repairUser(getCurrentUser());
+authSwitchBtn.addEventListener(
+  "click",
+  () => {
 
-  if(!user){
+    if(
+      loginForm.classList.contains("hidden")
+    ){
 
-    showAuth("login");
+      showAuth("login");
 
-    return;
+    }else{
+
+      showAuth("register");
+
+    }
 
   }
+);
 
-  const countryLang =
-    getLanguageForCountry(user.country);
 
-  user.language = countryLang;
+/* =========================================================
+   REGISTER
+   ========================================================= */
 
-  saveCurrentUser(user);
-
-  currentLanguage = countryLang;
-
-  localStorage.setItem(
-    STORAGE_LANG,
-    countryLang
-  );
-
-  document
-    .getElementById("authPage")
-    .classList.add("hidden");
-
-  document
-    .getElementById("app")
-    .classList.remove("hidden");
-
-  applyLanguage(countryLang);
-
-  renderAll();
-
-  startBonusTimer();
-  startWithdrawalStatusTimer();
-
-}
-
-document
-  .getElementById("authSwitch")
-  .addEventListener("click",() => {
-
-    showAuth(
-      authMode === "register"
-        ? "login"
-        : "register"
-    );
-
-  });
-
-document
-  .getElementById("authForm")
-  .addEventListener("submit",event => {
+registerForm.addEventListener(
+  "submit",
+  event => {
 
     event.preventDefault();
 
     const name =
-      document.getElementById("authName").value;
+      document
+        .getElementById("registerName")
+        .value
+        .trim();
 
     const email =
-      document.getElementById("authEmail").value;
+      document
+        .getElementById("registerEmail")
+        .value
+        .trim();
 
     const password =
-      document.getElementById("authPassword").value;
+      document
+        .getElementById("registerPassword")
+        .value;
 
     const country =
-      document.getElementById("authCountry").value;
+      document
+        .getElementById("registerCountry")
+        .value;
 
-    if(authMode === "register"){
+    if(
+      !name ||
+      !email ||
+      !password ||
+      !country
+    ){
 
-      if(
-        !name.trim() ||
-        !email.trim() ||
-        !password.trim() ||
-        !country
-      ){
-
-        alert(
-          getText("completeRegistration")
-        );
-
-        return;
-
-      }
-
-      const user =
-        createUser(
-          name,
-          email,
-          password,
-          country
-        );
-
-      if(user){
-
-        applyLanguage(
-          getLanguageForCountry(user.country)
-        );
-
-        enterApp();
-
-      }
-
-    }else{
-
-      const users = getUsers();
-
-      const normalizedEmail =
-        email.trim().toLowerCase();
-
-      const user =
-        users.find(
-          item =>
-            String(item.email || "").toLowerCase() ===
-            normalizedEmail &&
-            item.password === password
-        );
-
-      if(!user){
-
-        alert(
-          getText("incorrectLogin")
-        );
-
-        return;
-
-      }
-
-      user.language =
-        getLanguageForCountry(user.country);
-
-      repairUser(user);
-
-      localStorage.setItem(
-        STORAGE_CURRENT,
-        user.id
+      alert(
+        "Please complete all fields."
       );
 
-      currentLanguage =
-        user.language;
-
-      localStorage.setItem(
-        STORAGE_LANG,
-        user.language
-      );
-
-      applyLanguage(user.language);
-
-      enterApp();
+      return;
 
     }
 
-  });
+    const users =
+      getUsers();
+
+    const exists =
+      users.some(
+        user =>
+          user.email.toLowerCase() ===
+          email.toLowerCase()
+      );
+
+    if(exists){
+
+      alert(
+        "An account with this email already exists."
+      );
+
+      showAuth("login");
+
+      return;
+
+    }
+
+    const user =
+      createUser({
+        name,
+        email,
+        password,
+        country
+      });
+
+    users.push(user);
+
+    saveUsers(users);
+
+    setCurrentEmail(email);
+
+    registerForm.reset();
+
+    enterApp();
+
+  }
+);
+
 
 /* =========================================================
-   TRANSLATIONS
+   LOGIN
    ========================================================= */
 
-const translations = {
+loginForm.addEventListener(
+  "submit",
+  event => {
 
-  en:{
-    dashboard:"Dashboard",
-    miner:"BTC Miner",
-    bonus:"Bonus",
-    withdrawal:"Withdrawal",
-    history:"History",
-    settings:"Settings",
-    welcome:"Welcome back to NexaVest",
-    manageMining:"Manage your mining cycle",
-    registrationBonus:"Your registration bonus",
-    withdrawAvailable:"Withdraw your available balance",
-    transactionHistory:"View your transaction history",
-    accountPreferences:"Manage your account preferences",
-    authRegisterSubtitle:"Create your account to continue",
-    authLoginSubtitle:"Login to your NexaVest account",
-    fullName:"Full Name",
-    fullNamePlaceholder:"Full name",
-    email:"Email",
-    emailPlaceholder:"Email address",
-    password:"Password",
-    passwordPlaceholder:"Password",
-    country:"Country",
-    selectCountry:"Select country",
-    createAccount:"Create Account",
-    login:"Login",
-    register:"Register",
-    alreadyAccount:"Already have an account?",
-    noAccount:"Don't have an account?",
-    accountBalance:"Account Balance",
-    bonusBalance:"Bonus Balance",
-    miningEarnings:"Mining Earnings",
-    transactions:"Transactions",
-    accountOverview:"Account Overview",
-    accountName:"Account Name",
-    miningStatus:"Mining Status",
-    notRunning:"Not Running",
-    miningActive:"Mining Active",
-    btcMiner:"BTC Miner",
-    start48:"Start a 48-hour mining cycle",
-    minerWarning:"Once mining starts, the selected amount, uploaded proof and Start Mining button remain locked for the full 48-hour mining cycle.",
-    miningAmount:"Mining Amount",
-    target:"Target",
-    currentEarnings:"Current Earnings",
-    uploadProof:"Upload Proof",
-    noProof:"No proof selected.",
-    startMining:"Start Mining",
-    minimumMining:"Minimum $25",
-    miningLocked:"Mining is active. Your mining settings are locked until the 48-hour cycle is complete.",
-    proof:"Proof:",
-    bonusSubtitle:"Your registration bonus",
-    nextBonus:"Next bonus refresh",
-    withdrawBonus:"Withdraw Bonus",
-    enterWithdrawal:"Enter your withdrawal details",
-    withdrawalSource:"Withdrawal Source",
-    minerAccount:"Miner / Account Balance",
-    bonusBalanceOption:"Bonus Balance",
-    withdrawalAmount:"Withdrawal Amount",
-    enterAmount:"Enter amount",
-    bank:"Bank",
-    selectBank:"Select bank",
-    accountNumber:"Account Number",
-    accountNumberPlaceholder:"Account number",
-    accountName:"Account Name",
-    accountHolderPlaceholder:"Account holder name",
-    withdrawalFee:"Withdrawal Fee",
-    netAmount:"Net Amount",
-    submitWithdrawal:"Submit Withdrawal",
-    noTransactions:"No transactions yet.",
-    id:"ID",
-    date:"Date",
-    amount:"Amount",
-    fee:"Fee",
-    net:"Net",
-    status:"Status",
-    action:"Action",
-    view:"View",
-    settingsSubtitle:"Select your preferred language",
-    logout:"Logout",
-    transactionRecord:"Transaction Record",
-    close:"Close",
-    type:"Type",
-    source:"Source",
-    approved:"Approved",
-    completeRegistration:"Please complete all registration fields.",
-    incorrectLogin:"Incorrect email or password.",
-    accountCreated:"Account created successfully.",
-    minMiningAlert:"Minimum mining amount is $25.",
-    proofRequired:"Please upload your proof before starting mining.",
-    noBonus:"You do not have a bonus balance available.",
-    validWithdrawal:"Enter a valid withdrawal amount.",
-    greaterBalance:"The requested amount is greater than your available balance.",
-    greaterFee:"The withdrawal amount must be greater than the withdrawal fee.",
-    bankDetails:"Please complete your bank details.",
-    withdrawalSubmitted:"Withdrawal request submitted successfully. It is pending for 3 minutes."
-  },
+    event.preventDefault();
 
-  es:{
-    dashboard:"Panel",
-    miner:"Minero BTC",
-    bonus:"Bono",
-    withdrawal:"Retiro",
-    history:"Historial",
-    settings:"Configuración",
-    welcome:"Bienvenido de nuevo a NexaVest",
-    manageMining:"Administra tu ciclo de minería",
-    registrationBonus:"Tu bono de registro",
-    withdrawAvailable:"Retira tu saldo disponible",
-    transactionHistory:"Consulta tu historial de transacciones",
-    accountPreferences:"Administra las preferencias de tu cuenta",
-    authRegisterSubtitle:"Crea tu cuenta para continuar",
-    authLoginSubtitle:"Inicia sesión en tu cuenta NexaVest",
-    fullName:"Nombre completo",
-    fullNamePlaceholder:"Nombre completo",
-    email:"Correo electrónico",
-    emailPlaceholder:"Dirección de correo",
-    password:"Contraseña",
-    passwordPlaceholder:"Contraseña",
-    country:"País",
-    selectCountry:"Seleccionar país",
-    createAccount:"Crear cuenta",
-    login:"Iniciar sesión",
-    register:"Registrarse",
-    alreadyAccount:"¿Ya tienes una cuenta?",
-    noAccount:"¿No tienes una cuenta?",
-    accountBalance:"Saldo de la cuenta",
-    bonusBalance:"Saldo del bono",
-    miningEarnings:"Ganancias de minería",
-    transactions:"Transacciones",
-    accountOverview:"Resumen de la cuenta",
-    accountName:"Nombre de la cuenta",
-    miningStatus:"Estado de minería",
-    notRunning:"No activo",
-    miningActive:"Minería activa",
-    btcMiner:"Minero BTC",
-    start48:"Inicia un ciclo de minería de 48 horas",
-    minerWarning:"Una vez iniciada la minería, el monto seleccionado, la prueba cargada y el botón de inicio permanecerán bloqueados durante las 48 horas.",
-    miningAmount:"Monto de minería",
-    target:"Objetivo",
-    currentEarnings:"Ganancias actuales",
-    uploadProof:"Subir comprobante",
-    noProof:"No se ha seleccionado ningún comprobante.",
-    startMining:"Iniciar minería",
-    minimumMining:"Mínimo $25",
-    miningLocked:"La minería está activa. La configuración está bloqueada hasta completar el ciclo de 48 horas.",
-    proof:"Comprobante:",
-    bonusSubtitle:"Tu bono de registro",
-    nextBonus:"Próxima actualización del bono",
-    withdrawBonus:"Retirar bono",
-    enterWithdrawal:"Ingresa los datos de retiro",
-    withdrawalSource:"Fuente del retiro",
-    minerAccount:"Minero / Saldo de cuenta",
-    bonusBalanceOption:"Saldo del bono",
-    withdrawalAmount:"Monto del retiro",
-    enterAmount:"Ingresa el monto",
-    bank:"Banco",
-    selectBank:"Seleccionar banco",
-    accountNumber:"Número de cuenta",
-    accountNumberPlaceholder:"Número de cuenta",
-    accountName:"Nombre de la cuenta",
-    accountHolderPlaceholder:"Nombre del titular",
-    withdrawalFee:"Comisión de retiro",
-    netAmount:"Monto neto",
-    submitWithdrawal:"Enviar retiro",
-    noTransactions:"No hay transacciones todavía.",
-    id:"ID",
-    date:"Fecha",
-    amount:"Monto",
-    fee:"Comisión",
-    net:"Neto",
-    status:"Estado",
-    action:"Acción",
-    view:"Ver",
-    settingsSubtitle:"Selecciona tu idioma preferido",
-    logout:"Cerrar sesión",
-    transactionRecord:"Registro de transacción",
-    close:"Cerrar",
-    type:"Tipo",
-    source:"Fuente",
-    approved:"Aprobado",
-    completeRegistration:"Completa todos los campos de registro.",
-    incorrectLogin:"Correo o contraseña incorrectos.",
-    accountCreated:"Cuenta creada correctamente.",
-    minMiningAlert:"El monto mínimo de minería es $25.",
-    proofRequired:"Sube tu comprobante antes de iniciar la minería.",
-    noBonus:"No tienes un saldo de bono disponible.",
-    validWithdrawal:"Ingresa un monto de retiro válido.",
-    greaterBalance:"El monto solicitado es mayor que tu saldo disponible.",
-    greaterFee:"El monto de retiro debe ser mayor que la comisión.",
-    bankDetails:"Completa los datos bancarios.",
-    withdrawalSubmitted:"La solicitud de retiro se envió correctamente. Está pendiente durante 3 minutos."
-  },
+    const email =
+      document
+        .getElementById("loginEmail")
+        .value
+        .trim();
 
-  pt:{
-    dashboard:"Painel",
-    miner:"Minerador BTC",
-    bonus:"Bônus",
-    withdrawal:"Saque",
-    history:"Histórico",
-    settings:"Configurações",
-    welcome:"Bem-vindo de volta à NexaVest",
-    manageMining:"Gerencie seu ciclo de mineração",
-    registrationBonus:"Seu bônus de registro",
-    withdrawAvailable:"Saque seu saldo disponível",
-    transactionHistory:"Veja seu histórico de transações",
-    accountPreferences:"Gerencie as preferências da sua conta",
-    authRegisterSubtitle:"Crie sua conta para continuar",
-    authLoginSubtitle:"Entre na sua conta NexaVest",
-    fullName:"Nome completo",
-    fullNamePlaceholder:"Nome completo",
-    email:"E-mail",
-    emailPlaceholder:"Endereço de e-mail",
-    password:"Senha",
-    passwordPlaceholder:"Senha",
-    country:"País",
-    selectCountry:"Selecionar país",
-    createAccount:"Criar conta",
-    login:"Entrar",
-    register:"Registrar",
-    alreadyAccount:"Já possui uma conta?",
-    noAccount:"Não possui uma conta?",
-    accountBalance:"Saldo da conta",
-    bonusBalance:"Saldo do bônus",
-    miningEarnings:"Ganhos de mineração",
-    transactions:"Transações",
-    accountOverview:"Resumo da conta",
-    accountName:"Nome da conta",
-    miningStatus:"Status da mineração",
-    notRunning:"Não ativo",
-    miningActive:"Mineração ativa",
-    btcMiner:"Minerador BTC",
-    start48:"Inicie um ciclo de mineração de 48 horas",
-    minerWarning:"Depois que a mineração começar, o valor selecionado, a prova enviada e o botão de início ficarão bloqueados durante as 48 horas.",
-    miningAmount:"Valor da mineração",
-    target:"Meta",
-    currentEarnings:"Ganhos atuais",
-    uploadProof:"Enviar comprovante",
-    noProof:"Nenhum comprovante selecionado.",
-    startMining:"Iniciar mineração",
-    minimumMining:"Mínimo $25",
-    miningLocked:"A mineração está ativa. As configurações estão bloqueadas até o fim do ciclo de 48 horas.",
-    proof:"Comprovante:",
-    bonusSubtitle:"Seu bônus de registro",
-    nextBonus:"Próxima atualização do bônus",
-    withdrawBonus:"Sacar bônus",
-    enterWithdrawal:"Insira os dados do saque",
-    withdrawalSource:"Origem do saque",
-    minerAccount:"Minerador / Saldo da conta",
-    bonusBalanceOption:"Saldo do bônus",
-    withdrawalAmount:"Valor do saque",
-    enterAmount:"Digite o valor",
-    bank:"Banco",
-    selectBank:"Selecionar banco",
-    accountNumber:"Número da conta",
-    accountNumberPlaceholder:"Número da conta",
-    accountName:"Nome da conta",
-    accountHolderPlaceholder:"Nome do titular",
-    withdrawalFee:"Taxa de saque",
-    netAmount:"Valor líquido",
-    submitWithdrawal:"Enviar saque",
-    noTransactions:"Nenhuma transação ainda.",
-    id:"ID",
-    date:"Data",
-    amount:"Valor",
-    fee:"Taxa",
-    net:"Líquido",
-    status:"Status",
-    action:"Ação",
-    view:"Ver",
-    settingsSubtitle:"Selecione seu idioma preferido",
-    logout:"Sair",
-    transactionRecord:"Registro da transação",
-    close:"Fechar",
-    type:"Tipo",
-    source:"Origem",
-    approved:"Aprovado",
-    completeRegistration:"Preencha todos os campos de registro.",
-    incorrectLogin:"E-mail ou senha incorretos.",
-    accountCreated:"Conta criada com sucesso.",
-    minMiningAlert:"O valor mínimo de mineração é $25.",
-    proofRequired:"Envie seu comprovante antes de iniciar a mineração.",
-    noBonus:"Você não possui saldo de bônus disponível.",
-    validWithdrawal:"Digite um valor de saque válido.",
-    greaterBalance:"O valor solicitado é maior que seu saldo disponível.",
-    greaterFee:"O valor do saque deve ser maior que a taxa.",
-    bankDetails:"Preencha seus dados bancários.",
-    withdrawalSubmitted:"A solicitação de saque foi enviada com sucesso. Está pendente por 3 minutos."
-  },
+    const password =
+      document
+        .getElementById("loginPassword")
+        .value;
 
-  fr:{
-    dashboard:"Tableau de bord",
-    miner:"Mineur BTC",
-    bonus:"Bonus",
-    withdrawal:"Retrait",
-    history:"Historique",
-    settings:"Paramètres",
-    welcome:"Bon retour sur NexaVest",
-    manageMining:"Gérez votre cycle de minage",
-    registrationBonus:"Votre bonus d'inscription",
-    withdrawAvailable:"Retirez votre solde disponible",
-    transactionHistory:"Consultez votre historique de transactions",
-    accountPreferences:"Gérez les préférences de votre compte",
-    authRegisterSubtitle:"Créez votre compte pour continuer",
-    authLoginSubtitle:"Connectez-vous à votre compte NexaVest",
-    fullName:"Nom complet",
-    fullNamePlaceholder:"Nom complet",
-    email:"E-mail",
-    emailPlaceholder:"Adresse e-mail",
-    password:"Mot de passe",
-    passwordPlaceholder:"Mot de passe",
-    country:"Pays",
-    selectCountry:"Sélectionner un pays",
-    createAccount:"Créer un compte",
-    login:"Connexion",
-    register:"S'inscrire",
-    alreadyAccount:"Vous avez déjà un compte ?",
-    noAccount:"Vous n'avez pas de compte ?",
-    accountBalance:"Solde du compte",
-    bonusBalance:"Solde du bonus",
-    miningEarnings:"Gains de minage",
-    transactions:"Transactions",
-    accountOverview:"Aperçu du compte",
-    accountName:"Nom du compte",
-    miningStatus:"État du minage",
-    notRunning:"Inactif",
-    miningActive:"Minage actif",
-    btcMiner:"Mineur BTC",
-    start48:"Démarrer un cycle de minage de 48 heures",
-    minerWarning:"Une fois le minage commencé, le montant sélectionné, la preuve téléchargée et le bouton de démarrage resteront verrouillés pendant les 48 heures.",
-    miningAmount:"Montant du minage",
-    target:"Objectif",
-    currentEarnings:"Gains actuels",
-    uploadProof:"Télécharger la preuve",
-    noProof:"Aucune preuve sélectionnée.",
-    startMining:"Démarrer le minage",
-    minimumMining:"Minimum $25",
-    miningLocked:"Le minage est actif. Les paramètres sont verrouillés jusqu'à la fin du cycle de 48 heures.",
-    proof:"Preuve :",
-    bonusSubtitle:"Votre bonus d'inscription",
-    nextBonus:"Prochaine actualisation du bonus",
-    withdrawBonus:"Retirer le bonus",
-    enterWithdrawal:"Saisissez vos informations de retrait",
-    withdrawalSource:"Source du retrait",
-    minerAccount:"Mineur / Solde du compte",
-    bonusBalanceOption:"Solde du bonus",
-    withdrawalAmount:"Montant du retrait",
-    enterAmount:"Saisissez le montant",
-    bank:"Banque",
-    selectBank:"Sélectionner une banque",
-    accountNumber:"Numéro de compte",
-    accountNumberPlaceholder:"Numéro de compte",
-    accountName:"Nom du compte",
-    accountHolderPlaceholder:"Nom du titulaire",
-    withdrawalFee:"Frais de retrait",
-    netAmount:"Montant net",
-    submitWithdrawal:"Envoyer le retrait",
-    noTransactions:"Aucune transaction pour le moment.",
-    id:"ID",
-    date:"Date",
-    amount:"Montant",
-    fee:"Frais",
-    net:"Net",
-    status:"Statut",
-    action:"Action",
-    view:"Voir",
-    settingsSubtitle:"Sélectionnez votre langue préférée",
-    logout:"Déconnexion",
-    transactionRecord:"Enregistrement de transaction",
-    close:"Fermer",
-    type:"Type",
-    source:"Source",
-    approved:"Approuvé",
-    completeRegistration:"Veuillez remplir tous les champs d'inscription.",
-    incorrectLogin:"E-mail ou mot de passe incorrect.",
-    accountCreated:"Compte créé avec succès.",
-    minMiningAlert:"Le montant minimum de minage est de $25.",
-    proofRequired:"Veuillez télécharger votre preuve avant de commencer le minage.",
-    noBonus:"Vous n'avez aucun solde bonus disponible.",
-    validWithdrawal:"Saisissez un montant de retrait valide.",
-    greaterBalance:"Le montant demandé est supérieur à votre solde disponible.",
-    greaterFee:"Le montant du retrait doit être supérieur aux frais.",
-    bankDetails:"Veuillez compléter vos coordonnées bancaires.",
-    withdrawalSubmitted:"La demande de retrait a été envoyée avec succès. Elle est en attente pendant 3 minutes."
+    const users =
+      getUsers();
+
+    const user =
+      users.find(
+        item =>
+          item.email.toLowerCase() ===
+          email.toLowerCase() &&
+          item.password === password
+      );
+
+    if(!user){
+
+      alert(
+        "Invalid email or password."
+      );
+
+      return;
+
+    }
+
+    setCurrentEmail(user.email);
+
+    loginForm.reset();
+
+    enterApp();
+
+  }
+);
+
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+function logout(){
+
+  if(minerTimer){
+
+    clearInterval(minerTimer);
+    minerTimer = null;
+
   }
 
-};
+  if(bonusTimer){
 
-let currentLanguage = "en";
+    clearInterval(bonusTimer);
+    bonusTimer = null;
 
-function getText(key){
+  }
 
-  return (
-    translations[currentLanguage] &&
-    translations[currentLanguage][key]
-  ) ||
-  translations.en[key] ||
-  key;
+  if(withdrawalStatusTimer){
+
+    clearInterval(withdrawalStatusTimer);
+    withdrawalStatusTimer = null;
+
+  }
+
+  setCurrentEmail(null);
+
+  app.classList.add("hidden");
+
+  document
+    .getElementById("mobileNav")
+    .classList.add("hidden");
+
+  showAuth("login");
 
 }
 
-/* =========================================================
-   LANGUAGE APPLY
-   ========================================================= */
 
-function applyLanguage(lang){
-
-  if(!translations[lang]){
-    lang = "en";
-  }
-
-  currentLanguage = lang;
-
-  localStorage.setItem(
-    STORAGE_LANG,
-    lang
+document
+  .getElementById("sidebarLogout")
+  .addEventListener(
+    "click",
+    logout
   );
 
-  document.documentElement.lang = lang;
+
+document
+  .getElementById("dashboardLogout")
+  .addEventListener(
+    "click",
+    logout
+  );
+
+
+document
+  .getElementById("settingsLogout")
+  .addEventListener(
+    "click",
+    logout
+  );
+
+
+document
+  .getElementById("mobileLogout")
+  .addEventListener(
+    "click",
+    logout
+  );
+
+
+/* =========================================================
+   ENTER APP
+   ========================================================= */
+
+function enterApp(){
+
+  authPage.classList.add("hidden");
+  app.classList.remove("hidden");
 
   document
-    .querySelectorAll(".lang-btn")
-    .forEach(btn => {
+    .getElementById("mobileNav")
+    .classList.remove("hidden");
 
-      btn.classList.toggle(
-        "active",
-        btn.dataset.lang === lang
-      );
+  fillBanks();
 
-    });
-
-  const setText = (id,key) => {
-
-    const el =
-      document.getElementById(id);
-
-    if(el){
-      el.textContent = getText(key);
-    }
-
-  };
-
-  const setPlaceholder = (id,key) => {
-
-    const el =
-      document.getElementById(id);
-
-    if(el){
-      el.placeholder = getText(key);
-    }
-
-  };
-
-  setText("navDashboard","dashboard");
-  setText("navMiner","miner");
-  setText("navBonus","bonus");
-  setText("navWithdrawal","withdrawal");
-  setText("navHistory","history");
-  setText("navSettings","settings");
-
-  setText("mobileDashboard","dashboard");
-  setText("mobileMiner","miner");
-  setText("mobileBonus","bonus");
-  setText("mobileWithdraw","withdrawal");
-  setText("mobileHistory","history");
-  setText("mobileSettings","settings");
-
-  /* ADDED LOGOUT TRANSLATIONS */
-  setText("sidebarLogoutText","logout");
-  setText("mobileLogoutText","logout");
-
-  setText("labelFullName","fullName");
-  setText("labelEmail","email");
-  setText("labelPassword","password");
-  setText("labelCountry","country");
-
-  setText("labelAccountBalance","accountBalance");
-  setText("labelBonusBalance","bonusBalance");
-  setText("labelMiningEarnings","miningEarnings");
-  setText("labelTransactions","transactions");
-
-  setText("accountOverviewTitle","accountOverview");
-  setText("overviewAccountNameLabel","accountName");
-  setText("overviewEmailLabel","email");
-  setText("overviewCountryLabel","country");
-  setText("overviewMiningLabel","miningStatus");
-
-  setText("minerTitle","btcMiner");
-  setText("minerSubtitle","start48");
-  setText("minerWarning","minerWarning");
-  setText("minerAmountLabel","miningAmount");
-  setText("minerTargetLabel","target");
-  setText("minerCurrentLabel","currentEarnings");
-  setText("minerAmountInputLabel","miningAmount");
-  setText("minerProofLabel","uploadProof");
-  setText("startMiningBtn","startMining");
-
-  setText("bonusTitle","bonus");
-  setText("bonusSubtitle","bonusSubtitle");
-  setText("bonusRefreshLabel","nextBonus");
-  setText("bonusWithdrawBtn","withdrawBonus");
-
-  setText("withdrawalTitle","withdrawal");
-  setText("withdrawalSubtitle","enterWithdrawal");
-  setText("withdrawSourceLabel","withdrawalSource");
-  setText("withdrawMinerOption","minerAccount");
-  setText("withdrawBonusOption","bonusBalanceOption");
-  setText("withdrawAmountLabel","withdrawalAmount");
-  setText("withdrawBankLabel","bank");
-  setText("withdrawAccountLabel","accountNumber");
-  setText("withdrawNameLabel","accountName");
-  setText("withdrawFeeLabel","withdrawalFee");
-  setText("withdrawNetLabel","netAmount");
-  setText("submitWithdrawalBtn","submitWithdrawal");
-
-  setText("historyTitle","transactionHistory");
-  setText("historyEmpty","noTransactions");
-  setText("thId","id");
-  setText("thDate","date");
-  setText("thAmount","amount");
-  setText("thFee","fee");
-  setText("thNet","net");
-  setText("thStatus","status");
-  setText("thAction","action");
-
-  setText("settingsTitle","settings");
-  setText("settingsSubtitle","settingsSubtitle");
-  setText("logoutBtn","logout");
-
-  setText("dashboardLogoutBtn","logout");
-
-  setText("transactionRecordTitle","transactionRecord");
-  setText("closeModal","close");
-
-  setPlaceholder("authName","fullNamePlaceholder");
-  setPlaceholder("authEmail","emailPlaceholder");
-  setPlaceholder("authPassword","passwordPlaceholder");
-  setPlaceholder("minerAmount","minimumMining");
-  setPlaceholder("withdrawAccount","accountNumberPlaceholder");
-  setPlaceholder("withdrawName","accountHolderPlaceholder");
-
-  const withdrawalUser =
-    getCurrentUser();
-
-  const withdrawalInput =
-    document.getElementById("withdrawAmount");
-
-  if(withdrawalInput){
-
-    const currency =
-      getCurrency(
-        withdrawalUser &&
-        withdrawalUser.country
-      );
-
-    withdrawalInput.placeholder =
-      getText("enterAmount") +
-      " (" +
-      currency.symbol +
-      ")";
-
-  }
-
-  const countrySelect =
-    document.getElementById("authCountry");
-
-  if(countrySelect && countrySelect.options[0]){
-    countrySelect.options[0].textContent =
-      getText("selectCountry");
-  }
-
-  const bankSelect =
-    document.getElementById("withdrawBank");
-
-  if(bankSelect && bankSelect.options[0]){
-    bankSelect.options[0].textContent =
-      getText("selectBank");
-  }
-
-  updateAuthLanguage();
-  updatePageLanguage();
   renderAll();
 
-}
-
-function updateAuthLanguage(){
-
-  const mode = authMode;
-
-  const subtitle =
-    document.getElementById("authSubtitle");
-
-  const submit =
-    document.getElementById("authSubmit");
-
-  const switchText =
-    document.getElementById("authSwitchText");
-
-  const switchButton =
-    document.getElementById("authSwitch");
-
-  if(mode === "register"){
-
-    subtitle.textContent =
-      getText("authRegisterSubtitle");
-
-    submit.textContent =
-      getText("createAccount");
-
-    switchText.textContent =
-      getText("alreadyAccount");
-
-    switchButton.textContent =
-      getText("login");
-
-  }else{
-
-    subtitle.textContent =
-      getText("authLoginSubtitle");
-
-    submit.textContent =
-      getText("login");
-
-    switchText.textContent =
-      getText("noAccount");
-
-    switchButton.textContent =
-      getText("register");
-
-  }
+  showPage("dashboard");
 
 }
 
-function updatePageLanguage(){
-
-  const page =
-    document.querySelector(".page:not(.hidden)");
-
-  if(!page){
-    return;
-  }
-
-  const pageId =
-    page.id.replace("page-","");
-
-  const titleMap = {
-    dashboard:"dashboard",
-    miner:"miner",
-    bonus:"bonus",
-    withdrawal:"withdrawal",
-    history:"history",
-    settings:"settings"
-  };
-
-  const subtitleMap = {
-    dashboard:"welcome",
-    miner:"manageMining",
-    bonus:"registrationBonus",
-    withdrawal:"withdrawAvailable",
-    history:"transactionHistory",
-    settings:"accountPreferences"
-  };
-
-  document
-    .getElementById("pageTitle")
-    .textContent =
-      getText(titleMap[pageId]);
-
-  document
-    .getElementById("pageSubtitle")
-    .textContent =
-      getText(subtitleMap[pageId]);
-
-}
 
 /* =========================================================
    NAVIGATION
    ========================================================= */
 
-const pageNames = {
+const pageTitles = {
 
-  dashboard:{
-    titleKey:"dashboard",
-    subtitleKey:"welcome"
-  },
+  dashboard:[
+    "dashboard",
+    "dashboardSubtitle"
+  ],
 
-  miner:{
-    titleKey:"miner",
-    subtitleKey:"manageMining"
-  },
+  miner:[
+    "miner",
+    "minerSubtitle"
+  ],
 
-  bonus:{
-    titleKey:"bonus",
-    subtitleKey:"registrationBonus"
-  },
+  bonus:[
+    "bonusTitle",
+    "bonusSubtitle"
+  ],
 
-  withdrawal:{
-    titleKey:"withdrawal",
-    subtitleKey:"withdrawAvailable"
-  },
+  withdraw:[
+    "withdrawal",
+    "withdrawalSubtitle"
+  ],
 
-  history:{
-    titleKey:"history",
-    subtitleKey:"transactionHistory"
-  },
+  history:[
+    "history",
+    "historySubtitle"
+  ],
 
-  settings:{
-    titleKey:"settings",
-    subtitleKey:"accountPreferences"
-  }
+  settings:[
+    "settings",
+    "settingsSubtitle"
+  ]
 
 };
+
 
 function showPage(page){
 
   document
     .querySelectorAll(".page")
     .forEach(section => {
+
       section.classList.add("hidden");
+
     });
 
-  const selected =
-    document.getElementById("page-" + page);
 
-  if(selected){
-    selected.classList.remove("hidden");
+  const target =
+    document.getElementById(
+      "page-" + page
+    );
+
+  if(target){
+
+    target.classList.remove("hidden");
+
   }
 
-  document
-    .querySelectorAll(".nav-item,.mobile-nav button")
-    .forEach(button => {
 
-      button.classList.toggle(
+  document
+    .querySelectorAll(".nav-item[data-page]")
+    .forEach(item => {
+
+      item.classList.toggle(
         "active",
-        button.dataset.page === page
+        item.dataset.page === page
       );
 
     });
 
-  const info =
-    pageNames[page] ||
-    pageNames.dashboard;
 
   document
-    .getElementById("pageTitle")
-    .textContent =
-      getText(info.titleKey);
+    .querySelectorAll(".mobile-nav button[data-page]")
+    .forEach(item => {
 
-  document
-    .getElementById("pageSubtitle")
-    .textContent =
-      getText(info.subtitleKey);
+      item.classList.toggle(
+        "active",
+        item.dataset.page === page
+      );
 
-  if(page === "dashboard") updateDashboard();
-  if(page === "miner") renderMiner();
-  if(page === "bonus") renderBonus();
-  if(page === "withdrawal") renderWithdrawal();
-  if(page === "history") renderHistory();
+    });
+
+
+  const user =
+    getCurrentUser();
+
+  const lang =
+    localStorage.getItem(STORAGE_LANG) ||
+    "en";
+
+  const t =
+    translations[lang] ||
+    translations.en;
+
+  if(pageTitles[page]){
+
+    document.getElementById("pageTitle")
+      .textContent =
+      t[pageTitles[page][0]];
+
+    document.getElementById("pageSubtitle")
+      .textContent =
+      t[pageTitles[page][1]];
+
+  }
+
+  if(page === "withdraw"){
+
+    renderWithdrawal();
+
+  }
+
+  if(page === "history"){
+
+    renderHistory();
+
+  }
+
+  if(page === "miner"){
+
+    renderMiner();
+
+  }
+
+  if(page === "bonus"){
+
+    renderBonus();
+
+  }
 
 }
 
-document
-  .querySelectorAll(".nav-item,.mobile-nav button[data-page]")
-  .forEach(button => {
 
-    button.addEventListener("click",() => {
-      showPage(button.dataset.page);
-    });
+document
+  .querySelectorAll(".nav-item[data-page]")
+  .forEach(item => {
+
+    item.addEventListener(
+      "click",
+      () => {
+
+        showPage(
+          item.dataset.page
+        );
+
+      }
+    );
 
   });
 
+
+document
+  .querySelectorAll(".mobile-nav button[data-page]")
+  .forEach(item => {
+
+    item.addEventListener(
+      "click",
+      () => {
+
+        showPage(
+          item.dataset.page
+        );
+
+      }
+    );
+
+  });
+
+
+document
+  .querySelectorAll("[data-page-action]")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        showPage(
+          button.dataset.pageAction
+        );
+
+      }
+    );
+
+  });
+
+
 /* =========================================================
-   DASHBOARD
+   BANK LIST
+   ========================================================= */
+
+function fillBanks(){
+
+  const select =
+    document.getElementById(
+      "withdrawBank"
+    );
+
+  if(!select) return;
+
+  if(select.options.length > 0)
+    return;
+
+  banks.forEach(bank => {
+
+    const option =
+      document.createElement("option");
+
+    option.value = bank;
+    option.textContent = bank;
+
+    select.appendChild(option);
+
+  });
+
+}
+
+
+/* =========================================================
+   MONEY
+   ========================================================= */
+
+function formatMoney(user, amount){
+
+  const value =
+    Number(amount) || 0;
+
+  return new Intl.NumberFormat(
+    "en-US",
+    {
+      style:"currency",
+      currency:"USD",
+      minimumFractionDigits:2
+    }
+  ).format(value);
+
+}
+
+
+/* =========================================================
+   MINING
    ========================================================= */
 
 function getLiveMiningEarnings(user){
@@ -3116,262 +2622,202 @@ function getLiveMiningEarnings(user){
     !user.miner ||
     !user.miner.running
   ){
-    return 0;
+
+    return Number(
+      user?.miner?.earnings || 0
+    );
+
   }
 
-  const now = Date.now();
+  const now =
+    Date.now();
 
   const elapsed =
     Math.max(
       0,
       Math.min(
         now - user.miner.startTime,
-        MINING_DURATION
+        user.miner.endTime - user.miner.startTime
       )
     );
 
+  const duration =
+    Math.max(
+      1,
+      user.miner.endTime -
+      user.miner.startTime
+    );
+
   const progress =
-    elapsed / MINING_DURATION;
-
-  return Number(user.miner.target || 0) * progress;
-
-}
-
-function getAvailableBalance(user){
+    elapsed / duration;
 
   return (
-    Number(user.balance || 0) +
-    Number(user.bonusBalance || 0) +
-    getLiveMiningEarnings(user)
+    Number(user.miner.amount || 0) *
+    MINING_RATE *
+    progress
   );
 
 }
 
-function updateDashboard(){
 
-  const user =
-    repairUser(getCurrentUser());
+function settleMining(user){
 
-  if(!user){
+  if(
+    !user ||
+    !user.miner ||
+    !user.miner.running
+  ){
+
     return;
+
   }
 
-  const available =
-    getAvailableBalance(user);
+  const earnings =
+    getLiveMiningEarnings(user);
 
-  document.getElementById("dashboardBalance").textContent =
-    formatMoney(available,user);
+  user.balance =
+    Number(user.balance || 0) +
+    earnings;
 
-  document.getElementById("dashboardBonus").textContent =
-    formatMoney(user.bonusBalance,user);
+  user.miner.earnings =
+    earnings;
 
-  document.getElementById("dashboardMining").textContent =
-    formatMoney(getLiveMiningEarnings(user),user);
+  user.miner.running =
+    false;
 
-  document.getElementById("dashboardTransactions").textContent =
-    String(user.transactions.length);
+  user.miner.amount =
+    0;
 
-  document.getElementById("overviewName").textContent =
-    user.name || "User";
+  user.miner.startTime =
+    null;
 
-  document.getElementById("overviewEmail").textContent =
-    user.email || "—";
+  user.miner.endTime =
+    null;
 
-  document.getElementById("overviewCountry").textContent =
-    user.country || "—";
-
-  document.getElementById("userNameTop").textContent =
-    user.name || "User";
-
-  document.getElementById("userAvatar").textContent =
-    (user.name || "U")
-      .trim()
-      .charAt(0)
-      .toUpperCase();
-
-  document.getElementById("overviewMiningStatus").textContent =
-    user.miner.running
-      ? getText("miningActive")
-      : getText("notRunning");
+  saveCurrentUser(user);
 
 }
 
-/* =========================================================
-   MINER
-   ========================================================= */
-
-function startMinerTimer(){
-
-  if(minerInterval){
-    clearInterval(minerInterval);
-  }
-
-  minerInterval =
-    setInterval(() => {
-
-      const user = getCurrentUser();
-
-      if(!user){
-
-        clearInterval(minerInterval);
-
-        return;
-
-      }
-
-      if(
-        !user.miner ||
-        !user.miner.running
-      ){
-
-        renderMiner();
-        updateDashboard();
-
-        return;
-
-      }
-
-      if(
-        Date.now() >=
-        Number(user.miner.endTime)
-      ){
-
-        settleMining(user);
-
-        renderMiner();
-        updateDashboard();
-
-        return;
-
-      }
-
-      renderMiner();
-      updateDashboard();
-
-    },1000);
-
-}
 
 function renderMiner(){
 
-  const user = getCurrentUser();
+  const user =
+    getCurrentUser();
 
-  if(!user){
-    return;
-  }
+  if(!user) return;
 
-  const m = user.miner;
+  const running =
+    user.miner.running;
 
-  const amountInput =
-    document.getElementById("minerAmount");
-
-  const proofInput =
-    document.getElementById("minerProof");
-
-  const startButton =
-    document.getElementById("startMiningBtn");
-
-  if(m.running){
-
-    amountInput.disabled = true;
-    proofInput.disabled = true;
-    startButton.disabled = true;
-
-    document.getElementById("minerAmountDisplay").textContent =
-      formatMoney(m.amount,user);
-
-    document.getElementById("minerTargetDisplay").textContent =
-      formatMoney(m.target,user);
-
-    const earnings =
-      getLiveMiningEarnings(user);
-
-    document.getElementById("minerEarningsDisplay").textContent =
-      formatMoney(earnings,user);
-
-    const elapsed =
-      Math.max(
-        0,
-        Math.min(
-          Date.now() - m.startTime,
-          MINING_DURATION
-        )
-      );
-
-    const progress =
-      elapsed / MINING_DURATION;
-
-    document.getElementById("minerProgress").style.width =
-      Math.min(100,progress * 100) + "%";
-
-    document.getElementById("minerProgressText").textContent =
-      Math.floor(progress * 100) + "%";
-
-    const remaining =
-      Math.max(
-        0,
-        m.endTime - Date.now()
-      );
-
-    document.getElementById("minerTimer").textContent =
-      formatDuration(remaining);
-
-    document
-      .getElementById("minerLockMessage")
-      .classList.add("show");
-
-    document.getElementById("proofName").textContent =
-      m.proofName
-        ? getText("proof") + " " + m.proofName
-        : getText("uploadProof");
-
-    return;
-
-  }
-
-  amountInput.disabled = false;
-  proofInput.disabled = false;
-  startButton.disabled = false;
-
-  document.getElementById("minerAmountDisplay").textContent =
-    formatMoney(m.amount,user);
-
-  document.getElementById("minerTargetDisplay").textContent =
-    formatMoney(m.target,user);
-
-  document.getElementById("minerEarningsDisplay").textContent =
-    formatMoney(m.earnings,user);
-
-  document.getElementById("minerProgress").style.width =
-    (Number(m.progress || 0) * 100) + "%";
-
-  document.getElementById("minerProgressText").textContent =
-    Math.floor(Number(m.progress || 0) * 100) + "%";
-
-  document.getElementById("minerTimer").textContent =
-    "48:00:00";
+  const liveEarnings =
+    getLiveMiningEarnings(user);
 
   document
-    .getElementById("minerLockMessage")
-    .classList.remove("show");
+    .getElementById("minerAmountDisplay")
+    .textContent =
+    formatMoney(
+      user,
+      running
+        ? user.miner.amount
+        : 0
+    );
 
-  document.getElementById("proofName").textContent =
-    m.proofName
-      ? getText("proof") + " " + m.proofName
-      : getText("noProof");
+  document
+    .getElementById("minerEarningsDisplay")
+    .textContent =
+    formatMoney(
+      user,
+      liveEarnings
+    );
+
+  document
+    .getElementById("minerStatusDisplay")
+    .textContent =
+    running
+      ? "Mining"
+      : "Inactive";
+
+  document
+    .getElementById("minerProgress")
+    .style.width =
+    running
+      ? (
+        (
+          Date.now() -
+          user.miner.startTime
+        ) /
+        (
+          user.miner.endTime -
+          user.miner.startTime
+        ) *
+        100
+      ) + "%"
+      : "0%";
+
+  document
+    .getElementById("minerProgressText")
+    .textContent =
+    running
+      ? Math.min(
+          100,
+          Math.max(
+            0,
+            (
+              (
+                Date.now() -
+                user.miner.startTime
+              ) /
+              (
+                user.miner.endTime -
+                user.miner.startTime
+              )
+            ) * 100
+          )
+        ).toFixed(1) + "%"
+      : "0%";
+
+  document
+    .getElementById("minerTimer")
+    .textContent =
+    running
+      ? formatTimer(
+          Math.max(
+            0,
+            user.miner.endTime -
+            Date.now()
+          )
+        )
+      : "00:00:00";
+
+  document
+    .getElementById("startMiningBtn")
+    .disabled =
+    running;
+
+  document
+    .getElementById("minerAmount")
+    .disabled =
+    running;
+
+  document
+    .getElementById("miningProof")
+    .disabled =
+    running;
 
 }
 
-function formatDuration(ms){
+
+function formatTimer(ms){
 
   const totalSeconds =
-    Math.max(
-      0,
-      Math.floor(ms / 1000)
+    Math.ceil(
+      Math.max(0,ms) / 1000
     );
 
   const hours =
-    Math.floor(totalSeconds / 3600);
+    Math.floor(
+      totalSeconds / 3600
+    );
 
   const minutes =
     Math.floor(
@@ -3391,131 +2837,187 @@ function formatDuration(ms){
 
 }
 
-function settleMining(user){
-
-  if(
-    !user ||
-    !user.miner ||
-    !user.miner.running
-  ){
-    return;
-  }
-
-  const finalEarnings =
-    Number(user.miner.target || 0);
-
-  user.balance =
-    Number(user.balance || 0) +
-    finalEarnings;
-
-  user.miner.earnings = 0;
-  user.miner.running = false;
-  user.miner.progress = 1;
-  user.miner.credited = true;
-
-  saveCurrentUser(user);
-
-}
-
-function startMining(){
-
-  const user = getCurrentUser();
-
-  if(!user){
-    return;
-  }
-
-  if(user.miner.running){
-
-    renderMiner();
-
-    return;
-
-  }
-
-  const amountInput =
-    document.getElementById("minerAmount");
-
-  const proofInput =
-    document.getElementById("minerProof");
-
-  const amount =
-    Number(amountInput.value);
-
-  if(!amount || amount < 25){
-
-    alert(
-      getText("minMiningAlert")
-    );
-
-    return;
-
-  }
-
-  if(
-    !proofInput.files ||
-    !proofInput.files.length
-  ){
-
-    alert(
-      getText("proofRequired")
-    );
-
-    return;
-
-  }
-
-  const startTime = Date.now();
-
-  const endTime =
-    startTime + MINING_DURATION;
-
-  user.miner = {
-
-    running:true,
-    amount:amount,
-    target:amount * 10,
-    earnings:0,
-    credited:false,
-    progress:0,
-    startTime:startTime,
-    endTime:endTime,
-    proofName:proofInput.files[0].name
-
-  };
-
-  saveCurrentUser(user);
-
-  amountInput.disabled = true;
-  proofInput.disabled = true;
-
-  document
-    .getElementById("startMiningBtn")
-    .disabled = true;
-
-  renderMiner();
-  startMinerTimer();
-
-}
 
 document
   .getElementById("startMiningBtn")
-  .addEventListener("click",startMining);
+  .addEventListener(
+    "click",
+    () => {
+
+      const user =
+        getCurrentUser();
+
+      if(!user) return;
+
+      if(user.miner.running){
+
+        alert(
+          "Mining is already running."
+        );
+
+        return;
+
+      }
+
+      const amount =
+        Number(
+          document
+            .getElementById("minerAmount")
+            .value
+        );
+
+      const proof =
+        document
+          .getElementById("miningProof")
+          .files[0];
+
+      if(!amount || amount <= 0){
+
+        alert(
+          "Enter a valid mining amount."
+        );
+
+        return;
+
+      }
+
+      if(!proof){
+
+        alert(
+          "Please upload mining proof."
+        );
+
+        return;
+
+      }
+
+      if(
+        !proof.type ||
+        !proof.type.startsWith("image/")
+      ){
+
+        alert(
+          "Please upload an image file."
+        );
+
+        return;
+
+      }
+
+      user.miner.amount =
+        amount;
+
+      user.miner.earnings =
+        0;
+
+      user.miner.running =
+        true;
+
+      user.miner.startTime =
+        Date.now();
+
+      user.miner.endTime =
+        Date.now() +
+        MINING_DURATION;
+
+      user.miner.proofName =
+        proof.name;
+
+      saveCurrentUser(user);
+
+      document
+        .getElementById("minerAmount")
+        .value = "";
+
+      document
+        .getElementById("miningProof")
+        .value = "";
+
+      document
+        .getElementById("miningProofName")
+        .textContent =
+        "No proof selected";
+
+      renderMiner();
+
+      startMinerTimer();
+
+      alert(
+        "Mining started successfully."
+      );
+
+    }
+  );
+
 
 document
-  .getElementById("minerProof")
-  .addEventListener("change",event => {
+  .getElementById("miningProof")
+  .addEventListener(
+    "change",
+    event => {
 
-    const file =
-      event.target.files &&
-      event.target.files[0];
+      const file =
+        event.target.files[0];
 
-    document.getElementById("proofName").textContent =
-      file
-        ? getText("proof") + " " + file.name
-        : getText("noProof");
+      document
+        .getElementById("miningProofName")
+        .textContent =
+        file
+          ? file.name
+          : "No proof selected";
 
-  });
+    }
+  );
+
+
+function startMinerTimer(){
+
+  if(minerTimer){
+
+    clearInterval(minerTimer);
+
+  }
+
+  minerTimer =
+    setInterval(
+      () => {
+
+        const user =
+          getCurrentUser();
+
+        if(!user){
+
+          clearInterval(minerTimer);
+          minerTimer = null;
+
+          return;
+
+        }
+
+        if(
+          user.miner.running &&
+          Date.now() >=
+          user.miner.endTime
+        ){
+
+          settleMining(user);
+
+          alert(
+            "Mining cycle completed. Your earnings have been added to your balance."
+          );
+
+        }
+
+        renderMiner();
+        updateDashboard();
+        renderWithdrawal();
+
+      },
+      1000
+    );
+
+}
+
 
 /* =========================================================
    BONUS
@@ -3523,107 +3025,41 @@ document
 
 function renderBonus(){
 
-  const user = getCurrentUser();
+  const user =
+    getCurrentUser();
 
-  if(!user){
-    return;
-  }
+  if(!user) return;
 
-  document.getElementById("bonusAmount").textContent =
-    formatMoney(user.bonusBalance,user);
-
-  updateBonusCountdown();
-
-}
-
-function updateBonusCountdown(){
-
-  const now = new Date();
-
-  const tomorrow = new Date();
-
-  tomorrow.setHours(24,0,0,0);
-
-  const remaining =
-    tomorrow.getTime() - now.getTime();
-
-  document.getElementById("bonusCountdown").textContent =
-    formatDuration(remaining);
-
-}
-
-function startBonusTimer(){
-
-  if(bonusInterval){
-    clearInterval(bonusInterval);
-  }
-
-  updateBonusCountdown();
-
-  bonusInterval =
-    setInterval(updateBonusCountdown,1000);
-
-}
-
-document
-  .getElementById("bonusWithdrawBtn")
-  .addEventListener("click",() => {
-
-    const user = getCurrentUser();
-
-    if(!user){
-      return;
-    }
-
-    if(Number(user.bonusBalance || 0) <= 0){
-
-      alert(
-        getText("noBonus")
-      );
-
-      return;
-
-    }
-
-    document.getElementById("withdrawSource").value =
-      "bonus";
-
-    document.getElementById("withdrawAmount").value =
-      formatLocalInputAmount(
-        Number(user.bonusBalance || 0),
-        user
-      );
-
-    showPage("withdrawal");
-
-    updateWithdrawalCalculation();
-
-  });
-
-/* =========================================================
-   WITHDRAWAL
-   ========================================================= */
-
-function getSelectedWithdrawalFee(){
-
-  const source =
-    document.getElementById("withdrawSource").value;
-
-  return source === "bonus"
-    ? BONUS_WITHDRAWAL_FEE
-    : MINER_WITHDRAWAL_FEE;
-
-}
-
-function getWithdrawalBalance(user,source){
-
-  if(source === "bonus"){
-
-    return Number(
+  const amount =
+    Number(
       user.bonusBalance || 0
     );
 
-  }
+  document
+    .getElementById("bonusAmount")
+    .textContent =
+    formatMoney(
+      user,
+      amount
+    );
+
+  document
+    .getElementById("bonusMessage")
+    .textContent =
+    amount > 0
+      ? "Your available bonus can be used for withdrawal."
+      : "No bonus is currently available.";
+
+}
+
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+
+function getAvailableBalance(user){
+
+  if(!user) return 0;
 
   return (
     Number(user.balance || 0) +
@@ -3632,132 +3068,163 @@ function getWithdrawalBalance(user,source){
 
 }
 
-function renderWithdrawal(){
 
-  const user = getCurrentUser();
+function updateDashboard(){
 
-  if(!user){
-    return;
-  }
+  const user =
+    getCurrentUser();
 
-  updateBankOptions();
-  updateWithdrawalCalculation();
+  if(!user) return;
+
+  document
+    .getElementById("dashBalance")
+    .textContent =
+    formatMoney(
+      user,
+      getAvailableBalance(user)
+    );
+
+  document
+    .getElementById("dashBonus")
+    .textContent =
+    formatMoney(
+      user,
+      Number(user.bonusBalance || 0)
+    );
+
+  document
+    .getElementById("dashMined")
+    .textContent =
+    formatMoney(
+      user,
+      getLiveMiningEarnings(user)
+    );
+
+  document
+    .getElementById("dashMiningStatus")
+    .textContent =
+    user.miner.running
+      ? "Mining"
+      : "Inactive";
+
+  document
+    .getElementById("topUserName")
+    .textContent =
+    user.name;
+
+  document
+    .getElementById("topUserEmail")
+    .textContent =
+    user.email;
+
+  document
+    .getElementById("overviewName")
+    .textContent =
+    user.name;
+
+  document
+    .getElementById("overviewEmail")
+    .textContent =
+    user.email;
+
+  document
+    .getElementById("overviewCountry")
+    .textContent =
+    user.country;
+
+  document
+    .getElementById("overviewDate")
+    .textContent =
+    new Date(
+      user.createdAt
+    ).toLocaleDateString();
+
+  document
+    .getElementById("avatar")
+    .textContent =
+    (
+      user.name ||
+      "N"
+    )
+      .charAt(0)
+      .toUpperCase();
 
 }
 
-function updateBankOptions(){
 
-  const user = getCurrentUser();
+/* =========================================================
+   WITHDRAWAL
+   ========================================================= */
 
-  if(!user){
-    return;
-  }
+function getCurrentWithdrawalFee(){
 
-  const bankSelect =
-    document.getElementById("withdrawBank");
-
-  const currentValue =
-    bankSelect.value;
-
-  const banks =
-    countryBanks[user.country] || [];
-
-  bankSelect.innerHTML = "";
-
-  const first =
-    document.createElement("option");
-
-  first.value = "";
-
-  first.textContent =
-    getText("selectBank");
-
-  bankSelect.appendChild(first);
-
-  banks.forEach(bank => {
-
-    const option =
-      document.createElement("option");
-
-    option.value = bank;
-    option.textContent = bank;
-
-    bankSelect.appendChild(option);
-
-  });
-
-  if(banks.includes(currentValue)){
-    bankSelect.value = currentValue;
-  }
+  return withdrawalSource === "bonus"
+    ? BONUS_WITHDRAWAL_FEE
+    : MINER_WITHDRAWAL_FEE;
 
 }
+
 
 function updateWithdrawalCalculation(){
 
-  const user = getCurrentUser();
+  const user =
+    getCurrentUser();
 
-  if(!user){
-    return;
-  }
-
-  const source =
-    document.getElementById("withdrawSource").value;
-
-  const localAmount =
-    Number(
-      document.getElementById("withdrawAmount").value
-    ) || 0;
+  if(!user) return;
 
   const amount =
-    localToUSD(
-      localAmount,
-      user
-    );
+    Number(
+      document
+        .getElementById("withdrawAmount")
+        .value
+    ) || 0;
 
   const fee =
-    source === "bonus"
-      ? BONUS_WITHDRAWAL_FEE
-      : MINER_WITHDRAWAL_FEE;
+    getCurrentWithdrawalFee();
+
+  /*
+    The withdrawal fee is paid separately.
+    It is NOT deducted from the user's balance
+    and it is NOT deducted from the withdrawal amount.
+  */
 
   const net =
-    Math.max(
-      0,
-      amount - fee
+    amount;
+
+  document
+    .getElementById("withdrawalFeeDisplay")
+    .textContent =
+    formatMoney(
+      user,
+      fee
     );
 
-  document.getElementById("withdrawFee").textContent =
-    formatMoney(fee,user);
+  document
+    .getElementById("withdrawalGateFee")
+    .textContent =
+    formatMoney(
+      user,
+      fee
+    );
 
-  document.getElementById("withdrawNet").textContent =
-    formatMoney(net,user);
+  document
+    .getElementById("feeGross")
+    .textContent =
+    formatMoney(
+      user,
+      amount
+    );
 
-  const balance =
-    getWithdrawalBalance(user,source);
-
-  document.getElementById("withdrawBalance").textContent =
-    formatMoney(balance,user);
-
-  const currency =
-    getCurrency(user.country);
-
-  document.getElementById("withdrawAmount").placeholder =
-    getText("enterAmount") +
-    " (" +
-    currency.symbol +
-    ")";
+  document
+    .getElementById("feeNet")
+    .textContent =
+    formatMoney(
+      user,
+      net
+    );
 
 }
 
-document
-  .getElementById("withdrawSource")
-  .addEventListener("change",() => {
-
-    document.getElementById("withdrawAmount").value = "";
-
-    updateBankOptions();
-    updateWithdrawalCalculation();
-
-  });
 
 document
   .getElementById("withdrawAmount")
@@ -3766,45 +3233,296 @@ document
     updateWithdrawalCalculation
   );
 
+
+function renderWithdrawal(){
+
+  const user =
+    getCurrentUser();
+
+  if(!user) return;
+
+  document
+    .getElementById("withdrawBalance")
+    .textContent =
+    formatMoney(
+      user,
+      getAvailableBalance(user)
+    );
+
+  const feeInput =
+    document.getElementById(
+      "feePaymentImage"
+    );
+
+  const buttonWrap =
+    document.getElementById(
+      "withdrawalButtonWrap"
+    );
+
+  const status =
+    document.getElementById(
+      "feePaymentStatus"
+    );
+
+  /*
+    Bank details remain visible at all times.
+    Only the withdrawal button is gated by proof upload.
+  */
+
+  if(
+    feeInput &&
+    buttonWrap
+  ){
+
+    if(
+      feeInput.files &&
+      feeInput.files.length
+    ){
+
+      buttonWrap.classList.remove(
+        "withdrawal-button-hidden"
+      );
+
+      buttonWrap.classList.add(
+        "withdrawal-button-visible"
+      );
+
+      if(status){
+
+        status.style.color =
+          "var(--green)";
+
+        status.textContent =
+          "Payment proof uploaded. Withdrawal button is now available.";
+
+      }
+
+    }else{
+
+      buttonWrap.classList.remove(
+        "withdrawal-button-visible"
+      );
+
+      buttonWrap.classList.add(
+        "withdrawal-button-hidden"
+      );
+
+    }
+
+  }
+
+  updateWithdrawalCalculation();
+
+}
+
+
+function handleFeePaymentUpload(){
+
+  const fileInput =
+    document.getElementById(
+      "feePaymentImage"
+    );
+
+  const status =
+    document.getElementById(
+      "feePaymentStatus"
+    );
+
+  const buttonWrap =
+    document.getElementById(
+      "withdrawalButtonWrap"
+    );
+
+  if(
+    !fileInput ||
+    !status ||
+    !buttonWrap
+  ) return;
+
+
+  if(
+    !fileInput.files ||
+    !fileInput.files.length
+  ){
+
+    buttonWrap.classList.remove(
+      "withdrawal-button-visible"
+    );
+
+    buttonWrap.classList.add(
+      "withdrawal-button-hidden"
+    );
+
+    status.textContent = "";
+
+    return;
+
+  }
+
+
+  const file =
+    fileInput.files[0];
+
+
+  if(
+    !file.type ||
+    !file.type.startsWith("image/")
+  ){
+
+    fileInput.value = "";
+
+    buttonWrap.classList.remove(
+      "withdrawal-button-visible"
+    );
+
+    buttonWrap.classList.add(
+      "withdrawal-button-hidden"
+    );
+
+    status.textContent =
+      "Please upload an image file.";
+
+    status.style.color =
+      "#ff7b7b";
+
+    return;
+
+  }
+
+
+  buttonWrap.classList.remove(
+    "withdrawal-button-hidden"
+  );
+
+  buttonWrap.classList.add(
+    "withdrawal-button-visible"
+  );
+
+  status.style.color =
+    "var(--green)";
+
+  status.textContent =
+    "Payment proof uploaded. Withdrawal button is now available.";
+
+  updateWithdrawalCalculation();
+
+}
+
+
+const feePaymentImageInput =
+  document.getElementById(
+    "feePaymentImage"
+  );
+
+if(feePaymentImageInput){
+
+  feePaymentImageInput.addEventListener(
+    "change",
+    handleFeePaymentUpload
+  );
+
+}
+
+
+/* =========================================================
+   WITHDRAW BUTTON
+   ========================================================= */
+
+document
+  .getElementById("withdrawBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      withdrawalSource =
+        "miner";
+
+      submitWithdrawal();
+
+    }
+  );
+
+
 function submitWithdrawal(){
 
-  const user = getCurrentUser();
+  const user =
+    getCurrentUser();
 
-  if(!user){
-    return;
-  }
+  if(!user) return;
+
 
   if(
     user.miner.running &&
-    Date.now() >= user.miner.endTime
+    Date.now() >=
+    user.miner.endTime
   ){
+
     settleMining(user);
+
   }
 
-  const source =
-    document.getElementById("withdrawSource").value;
 
-  const isBonusWithdrawal =
-    source === "bonus";
-
-  const withdrawalFee =
-    isBonusWithdrawal
-      ? BONUS_WITHDRAWAL_FEE
-      : MINER_WITHDRAWAL_FEE;
-
-  const localAmount =
-    Number(
-      document.getElementById("withdrawAmount").value
+  const proofInput =
+    document.getElementById(
+      "feePaymentImage"
     );
+
+
+  /*
+    The withdrawal button is only made visible
+    after an image proof has been selected.
+    This validation remains in place as a second
+    protection in case the function is triggered
+    programmatically.
+  */
+
+  if(
+    !proofInput ||
+    !proofInput.files ||
+    !proofInput.files.length
+  ){
+
+    alert(
+      "Please pay the withdrawal fee and upload the payment proof before submitting the withdrawal."
+    );
+
+    return;
+
+  }
+
+
+  const proof =
+    proofInput.files[0];
+
+
+  if(
+    !proof ||
+    !proof.type ||
+    !proof.type.startsWith("image/")
+  ){
+
+    alert(
+      "Please upload a valid image payment proof."
+    );
+
+    return;
+
+  }
+
 
   const amount =
-    localToUSD(
-      localAmount,
-      user
+    Number(
+      document
+        .getElementById("withdrawAmount")
+        .value
     );
 
+
   const bank =
-    document.getElementById("withdrawBank").value;
+    document
+      .getElementById("withdrawBank")
+      .value;
+
 
   const account =
     document
@@ -3812,75 +3530,91 @@ function submitWithdrawal(){
       .value
       .trim();
 
+
   const accountName =
     document
       .getElementById("withdrawName")
       .value
       .trim();
 
+
+  const isBonusWithdrawal =
+    withdrawalSource === "bonus";
+
+
+  const withdrawalFee =
+    getCurrentWithdrawalFee();
+
+
   const available =
-    getWithdrawalBalance(user,source);
+    isBonusWithdrawal
+      ? Number(
+          user.bonusBalance || 0
+        )
+      : Number(
+          user.balance || 0
+        ) +
+        getLiveMiningEarnings(user);
+
 
   if(
-    !localAmount ||
-    localAmount <= 0 ||
     !amount ||
     amount <= 0
   ){
 
     alert(
-      getText("validWithdrawal")
+      "Enter a valid withdrawal amount."
     );
 
     return;
 
   }
+
 
   if(amount > available){
 
     alert(
-      getText("greaterBalance")
+      "The requested amount is greater than your available balance."
     );
 
     return;
 
   }
 
-  if(amount <= withdrawalFee){
+
+  if(
+    !bank ||
+    !account ||
+    !accountName
+  ){
 
     alert(
-      getText("greaterFee") +
-      " " +
-      formatMoney(
-        withdrawalFee,
-        user
-      ) +
-      "."
+      "Please complete your bank details."
     );
 
     return;
 
   }
 
-  if(!bank || !account || !accountName){
 
-    alert(
-      getText("bankDetails")
-    );
-
-    return;
-
-  }
+  /*
+    The fee is paid separately.
+    DO NOT subtract the fee from the
+    user's balance or withdrawal amount.
+  */
 
   const net =
-    amount - withdrawalFee;
+    amount;
+
 
   if(isBonusWithdrawal){
 
     user.bonusBalance =
       Math.max(
         0,
-        Number(user.bonusBalance || 0) - amount
+        Number(
+          user.bonusBalance || 0
+        ) - amount
       );
 
   }else{
@@ -3889,29 +3623,46 @@ function submitWithdrawal(){
       getLiveMiningEarnings(user);
 
     const settledBalance =
-      Number(user.balance || 0);
+      Number(
+        user.balance || 0
+      );
 
-    if(amount <= settledBalance){
 
-      user.balance =
-        settledBalance - amount;
+    /*
+      Miner withdrawals use the miner/account balance only.
+      Any live mining earnings are shown as available but are
+      not double-counted in storage.
+    */
 
-    }else{
+    if(
+      amount >
+      settledBalance
+    ){
 
       const livePortion =
-        amount - settledBalance;
+        amount -
+        settledBalance;
 
-      user.balance = 0;
+      user.balance =
+        0;
 
       user.miner.earnings =
         Math.max(
           0,
-          liveEarnings - livePortion
+          liveEarnings -
+          livePortion
         );
+
+    }else{
+
+      user.balance =
+        settledBalance -
+        amount;
 
     }
 
   }
+
 
   const transaction = {
 
@@ -3925,24 +3676,37 @@ function submitWithdrawal(){
         .toString()
         .slice(-8),
 
-    date:new Date().toISOString(),
+    date:
+      new Date().toISOString(),
 
-    type:"Withdrawal",
+    type:
+      "Withdrawal",
 
     source:
       isBonusWithdrawal
         ? "Bonus"
         : "Miner",
 
-    amount:amount,
-    fee:withdrawalFee,
-    net:net,
+    amount:
+      amount,
 
-    bank:bank,
-    account:account,
-    accountName:accountName,
+    fee:
+      withdrawalFee,
 
-    status:"Pending",
+    net:
+      net,
+
+    bank:
+      bank,
+
+    account:
+      account,
+
+    accountName:
+      accountName,
+
+    status:
+      "Pending",
 
     pendingUntil:
       Date.now() +
@@ -3950,32 +3714,53 @@ function submitWithdrawal(){
 
   };
 
-  user.transactions.unshift(transaction);
+
+  user.transactions.unshift(
+    transaction
+  );
+
 
   saveCurrentUser(user);
 
-  document.getElementById("withdrawAmount").value = "";
-  document.getElementById("withdrawAccount").value = "";
-  document.getElementById("withdrawName").value = "";
+
+  document
+    .getElementById("withdrawAmount")
+    .value = "";
+
+
+  document
+    .getElementById("withdrawAccount")
+    .value = "";
+
+
+  document
+    .getElementById("withdrawName")
+    .value = "";
+
+
+  /*
+    Keep the proof selected for the current
+    withdrawal page session, so the button
+    remains available until the user leaves
+    or reloads the page.
+  */
 
   updateWithdrawalCalculation();
+
   updateDashboard();
+
   renderHistory();
 
+
   alert(
-    getText("withdrawalSubmitted")
+    "Withdrawal request submitted successfully. It is pending for 3 minutes."
   );
+
 
   showPage("history");
 
 }
 
-document
-  .getElementById("submitWithdrawalBtn")
-  .addEventListener(
-    "click",
-    submitWithdrawal
-  );
 
 /* =========================================================
    WITHDRAWAL STATUS
@@ -3983,71 +3768,78 @@ document
 
 function updateWithdrawalStatuses(){
 
-  const user = getCurrentUser();
+  const user =
+    getCurrentUser();
 
-  if(
-    !user ||
-    !Array.isArray(user.transactions)
-  ){
-    return;
-  }
+  if(!user) return;
 
-  let changed = false;
+  let changed =
+    false;
 
-  user.transactions.forEach(tx => {
 
-    if(
-      tx.status === "Pending" &&
-      tx.pendingUntil &&
-      Date.now() >= Number(tx.pendingUntil)
-    ){
+  user.transactions =
+    Array.isArray(
+      user.transactions
+    )
+      ? user.transactions
+      : [];
 
-      tx.status = "Withdrawn";
 
-      tx.approvedAt =
-        new Date().toISOString();
+  user.transactions.forEach(
+    transaction => {
 
-      changed = true;
+      if(
+        transaction.status ===
+        "Pending" &&
+        transaction.pendingUntil &&
+        Date.now() >=
+        transaction.pendingUntil
+      ){
 
-    }
+        transaction.status =
+          "Completed";
 
-  });
-
-  if(changed){
-    saveCurrentUser(user);
-  }
-
-}
-
-function startWithdrawalStatusTimer(){
-
-  if(withdrawalInterval){
-    clearInterval(withdrawalInterval);
-  }
-
-  updateWithdrawalStatuses();
-
-  withdrawalInterval =
-    setInterval(() => {
-
-      const user = getCurrentUser();
-
-      if(!user){
-
-        clearInterval(
-          withdrawalInterval
-        );
-
-        return;
+        changed =
+          true;
 
       }
 
-      updateWithdrawalStatuses();
-      renderHistory();
+    }
+  );
 
-    },1000);
+
+  if(changed){
+
+    saveCurrentUser(user);
+
+  }
 
 }
+
+
+function startWithdrawalStatusTimer(){
+
+  if(withdrawalStatusTimer){
+
+    clearInterval(
+      withdrawalStatusTimer
+    );
+
+  }
+
+  withdrawalStatusTimer =
+    setInterval(
+      () => {
+
+        updateWithdrawalStatuses();
+        renderHistory();
+
+      },
+      1000
+    );
+
+}
+
 
 /* =========================================================
    HISTORY
@@ -4055,250 +3847,256 @@ function startWithdrawalStatusTimer(){
 
 function renderHistory(){
 
-  const user = getCurrentUser();
+  const user =
+    getCurrentUser();
 
-  if(!user){
-    return;
-  }
-
-  updateWithdrawalStatuses();
+  if(!user) return;
 
   const body =
-    document.getElementById("historyBody");
+    document.getElementById(
+      "historyBody"
+    );
 
-  const empty =
-    document.getElementById("historyEmpty");
+  if(!body) return;
 
-  const table =
-    document.getElementById("historyTable");
 
-  if(!user.transactions.length){
+  const transactions =
+    Array.isArray(
+      user.transactions
+    )
+      ? user.transactions
+      : [];
 
-    empty.classList.remove("hidden");
-    table.classList.add("hidden");
+
+  if(!transactions.length){
+
+    body.innerHTML = `
+      <tr>
+        <td colspan="8" style="text-align:center;color:var(--muted);padding:30px;">
+          No transactions yet.
+        </td>
+      </tr>
+    `;
 
     return;
 
   }
 
-  empty.classList.add("hidden");
-  table.classList.remove("hidden");
 
   body.innerHTML =
-    user.transactions
-      .map((tx,index) => {
+    transactions
+      .map(
+        tx => {
 
-        const date =
-          new Date(tx.date).toLocaleString();
+          const status =
+            tx.status ||
+            "Pending";
 
-        return `
+          const statusClass =
+            status === "Completed"
+              ? "completed"
+              : "pending";
 
-          <tr>
+          return `
 
-            <td>
-              ${escapeHtml(tx.id)}
-            </td>
+            <tr>
 
-            <td>
-              ${escapeHtml(date)}
-            </td>
+              <td>
+                ${new Date(
+                  tx.date
+                ).toLocaleString()}
+              </td>
 
-            <td>
-              ${formatMoney(tx.amount,user)}
-            </td>
+              <td>
+                ${escapeHtml(tx.type)}
+              </td>
 
-            <td>
-              ${formatMoney(tx.fee,user)}
-            </td>
+              <td>
+                ${escapeHtml(tx.source)}
+              </td>
 
-            <td>
-              ${formatMoney(tx.net,user)}
-            </td>
+              <td>
+                ${formatMoney(
+                  user,
+                  tx.amount
+                )}
+              </td>
 
-            <td>
+              <td>
+                ${formatMoney(
+                  user,
+                  tx.fee
+                )}
+              </td>
 
-              <span
-                class="status ${
-                  tx.status === "Withdrawn"
-                    ? "completed"
-                    : "pending"
-                }"
-              >
-                ${escapeHtml(tx.status)}
-              </span>
+              <td>
+                ${formatMoney(
+                  user,
+                  tx.net
+                )}
+              </td>
 
-            </td>
+              <td>
 
-            <td>
+                <span
+                  class="status ${statusClass}"
+                >
+                  ${escapeHtml(status)}
+                </span>
 
-              <button
-                class="secondary-btn"
-                type="button"
-                onclick="viewTransaction(${index})"
-              >
-                ${getText("view")}
-              </button>
+              </td>
 
-            </td>
+              <td>
 
-          </tr>
+                <button
+                  class="secondary-btn"
+                  type="button"
+                  onclick="openTransaction('${escapeHtml(tx.id)}')"
+                >
+                  View
+                </button>
 
-        `;
+              </td>
 
-      })
+            </tr>
+
+          `;
+
+        }
+      )
       .join("");
 
 }
 
-window.viewTransaction =
-function(index){
 
-  const user = getCurrentUser();
+/* =========================================================
+   TRANSACTION MODAL
+   ========================================================= */
 
-  if(!user){
-    return;
-  }
+function openTransaction(id){
 
-  updateWithdrawalStatuses();
-
-  const refreshedUser =
+  const user =
     getCurrentUser();
 
+  if(!user) return;
+
   const tx =
-    refreshedUser.transactions[index];
+    user.transactions.find(
+      item =>
+        item.id === id
+    );
 
-  if(!tx){
-    return;
-  }
+  if(!tx) return;
 
-  currentTransaction = tx;
 
-  let statusText = tx.status;
+  const statusText =
+    tx.status ||
+    "Pending";
+
+
   let approvalText = "";
 
   if(
-    tx.status === "Pending" &&
-    tx.pendingUntil
-  ){
-
-    const remaining =
-      Math.max(
-        0,
-        Number(tx.pendingUntil) - Date.now()
-      );
-
-    statusText =
-      "Pending — " +
-      formatPendingTime(remaining);
-
-  }
-
-  if(
-    tx.status === "Withdrawn" &&
-    tx.approvedAt
+    statusText ===
+    "Pending"
   ){
 
     approvalText = `
 
-      <div class="fee-row">
-
-        <span>
-          ${getText("approved")}
-        </span>
-
-        <strong>
-          ${escapeHtml(
-            new Date(
-              tx.approvedAt
-            ).toLocaleString()
-          )}
-        </strong>
-
+      <div
+        style="
+          margin-top:15px;
+          padding:12px;
+          border-radius:11px;
+          background:rgba(255,200,87,.08);
+          border:1px solid rgba(255,200,87,.15);
+          color:#f5d78c;
+          font-size:13px;
+        "
+      >
+        This withdrawal is pending and will update automatically.
       </div>
 
     `;
 
   }
 
+
   document
-    .getElementById("transactionDetails")
+    .getElementById(
+      "transactionModalBody"
+    )
     .innerHTML = `
 
-      <div class="fee-box">
+      <div>
 
         <div class="fee-row">
-          <span>${getText("id")}</span>
-          <strong>${escapeHtml(tx.id)}</strong>
+          <span>Date</span>
+          <strong>
+            ${new Date(
+              tx.date
+            ).toLocaleString()}
+          </strong>
         </div>
 
         <div class="fee-row">
-          <span>${getText("date")}</span>
+          <span>Type</span>
+          <strong>${escapeHtml(tx.type)}</strong>
+        </div>
+
+        <div class="fee-row">
+          <span>Source</span>
+          <strong>${escapeHtml(tx.source)}</strong>
+        </div>
+
+        <div class="fee-row">
+          <span>Amount</span>
           <strong>
-            ${escapeHtml(
-              new Date(tx.date).toLocaleString()
+            ${formatMoney(
+              user,
+              tx.amount
             )}
           </strong>
         </div>
 
         <div class="fee-row">
-          <span>${getText("type")}</span>
-          <strong>${escapeHtml(tx.type)}</strong>
-        </div>
-
-        <div class="fee-row">
-          <span>${getText("source")}</span>
+          <span>Fee</span>
           <strong>
-            ${escapeHtml(tx.source || "Miner")}
+            ${formatMoney(
+              user,
+              tx.fee
+            )}
           </strong>
         </div>
 
         <div class="fee-row">
-          <span>${getText("amount")}</span>
+          <span>Net</span>
           <strong>
-            ${formatMoney(tx.amount,refreshedUser)}
+            ${formatMoney(
+              user,
+              tx.net
+            )}
           </strong>
         </div>
 
         <div class="fee-row">
-          <span>${getText("fee")}</span>
-          <strong>
-            ${formatMoney(tx.fee,refreshedUser)}
-          </strong>
+          <span>Bank</span>
+          <strong>${escapeHtml(tx.bank)}</strong>
         </div>
 
         <div class="fee-row">
-          <span>${getText("net")}</span>
-          <strong>
-            ${formatMoney(tx.net,refreshedUser)}
-          </strong>
+          <span>Account Number</span>
+          <strong>${escapeHtml(tx.account)}</strong>
         </div>
 
         <div class="fee-row">
-          <span>${getText("bank")}</span>
-          <strong>
-            ${escapeHtml(tx.bank)}
-          </strong>
+          <span>Account Name</span>
+          <strong>${escapeHtml(tx.accountName)}</strong>
         </div>
 
         <div class="fee-row">
-          <span>${getText("accountNumber")}</span>
-          <strong>
-            ${escapeHtml(tx.account)}
-          </strong>
-        </div>
-
-        <div class="fee-row">
-          <span>${getText("accountName")}</span>
-          <strong>
-            ${escapeHtml(tx.accountName)}
-          </strong>
-        </div>
-
-        <div class="fee-row">
-          <span>${getText("status")}</span>
-          <strong>
-            ${escapeHtml(statusText)}
-          </strong>
+          <span>Status</span>
+          <strong>${escapeHtml(statusText)}</strong>
         </div>
 
         ${approvalText}
@@ -4307,11 +4105,13 @@ function(index){
 
     `;
 
+
   document
     .getElementById("transactionModal")
     .classList.remove("hidden");
 
-};
+}
+
 
 function formatPendingTime(ms){
 
@@ -4321,7 +4121,9 @@ function formatPendingTime(ms){
     );
 
   const minutes =
-    Math.floor(totalSeconds / 60);
+    Math.floor(
+      totalSeconds / 60
+    );
 
   const seconds =
     totalSeconds % 60;
@@ -4334,116 +4136,731 @@ function formatPendingTime(ms){
 
 }
 
+
 document
   .getElementById("closeModal")
-  .addEventListener("click",() => {
+  .addEventListener(
+    "click",
+    () => {
 
-    document
-      .getElementById("transactionModal")
-      .classList.add("hidden");
+      document
+        .getElementById("transactionModal")
+        .classList.add("hidden");
 
-  });
+    }
+  );
+
 
 /* =========================================================
-   LANGUAGE BUTTONS
+   LANGUAGE
    ========================================================= */
+
+const translations = {
+
+  en:{
+
+    dashboard:"Dashboard",
+    miner:"BTC Miner",
+    bonus:"Bonus",
+    withdrawal:"Withdrawal",
+    history:"History",
+    settings:"Settings",
+
+    dashboardSubtitle:
+      "Overview of your NexaVest account",
+
+    minerSubtitle:
+      "Manage your active mining cycle",
+
+    bonusSubtitle:
+      "View your available bonus balance",
+
+    withdrawalSubtitle:
+      "Request a withdrawal from your available balance",
+
+    historySubtitle:
+      "View your transaction records",
+
+    settingsSubtitle:
+      "Manage your NexaVest preferences",
+
+    dashboardNav:
+      "🏠 Dashboard",
+
+    minerNav:
+      "⛏️ BTC Miner",
+
+    bonusNav:
+      "🎁 Bonus",
+
+    withdrawNav:
+      "💸 Withdrawal",
+
+    historyNav:
+      "📋 History",
+
+    settingsNav:
+      "⚙️ Settings",
+
+    logout:
+      "🚪 Logout",
+
+    fullName:
+      "Full Name",
+
+    fullNamePlaceholder:
+      "Full name",
+
+    email:
+      "Email",
+
+    emailPlaceholder:
+      "Email address",
+
+    password:
+      "Password",
+
+    passwordPlaceholder:
+      "Password",
+
+    country:
+      "Country",
+
+    accountBalance:
+      "Account Balance",
+
+    bonusBalance:
+      "Bonus Balance",
+
+    minedEarnings:
+      "Mined Earnings",
+
+    miningStatus:
+      "Mining Status",
+
+    accountOverview:
+      "Account Overview",
+
+    bonusTitle:
+      "Bonus",
+
+    withdrawalTitle:
+      "Withdrawal",
+
+    transactionHistory:
+      "Transaction History",
+
+    language:
+      "Language",
+
+    transactionRecord:
+      "Transaction Record",
+
+    miningAmount:
+      "Mining Amount",
+
+    uploadProof:
+      "Upload Proof",
+
+    withdrawalAmount:
+      "Withdrawal Amount",
+
+    bank:
+      "Bank",
+
+    accountNumber:
+      "Account Number",
+
+    accountName:
+      "Account Name",
+
+    withdrawalFee:
+      "Withdrawal Fee",
+
+    netAmount:
+      "Net Amount",
+
+    mining:
+      "Mining",
+
+    inactive:
+      "Inactive"
+
+  },
+
+
+  es:{
+
+    dashboard:
+      "Panel",
+
+    miner:
+      "Minero BTC",
+
+    bonus:
+      "Bono",
+
+    withdrawal:
+      "Retiro",
+
+    history:
+      "Historial",
+
+    settings:
+      "Configuración",
+
+    dashboardSubtitle:
+      "Resumen de tu cuenta NexaVest",
+
+    minerSubtitle:
+      "Administra tu ciclo de minería activo",
+
+    bonusSubtitle:
+      "Consulta tu saldo de bonos disponible",
+
+    withdrawalSubtitle:
+      "Solicita un retiro de tu saldo disponible",
+
+    historySubtitle:
+      "Consulta tus registros de transacciones",
+
+    settingsSubtitle:
+      "Administra tus preferencias de NexaVest",
+
+    dashboardNav:
+      "🏠 Panel",
+
+    minerNav:
+      "⛏️ Minero BTC",
+
+    bonusNav:
+      "🎁 Bono",
+
+    withdrawNav:
+      "💸 Retiro",
+
+    historyNav:
+      "📋 Historial",
+
+    settingsNav:
+      "⚙️ Configuración",
+
+    logout:
+      "🚪 Cerrar sesión",
+
+    fullName:
+      "Nombre completo",
+
+    fullNamePlaceholder:
+      "Nombre completo",
+
+    email:
+      "Correo electrónico",
+
+    emailPlaceholder:
+      "Dirección de correo",
+
+    password:
+      "Contraseña",
+
+    passwordPlaceholder:
+      "Contraseña",
+
+    country:
+      "País",
+
+    accountBalance:
+      "Saldo de la cuenta",
+
+    bonusBalance:
+      "Saldo del bono",
+
+    minedEarnings:
+      "Ganancias de minería",
+
+    miningStatus:
+      "Estado de minería",
+
+    accountOverview:
+      "Resumen de la cuenta",
+
+    bonusTitle:
+      "Bono",
+
+    withdrawalTitle:
+      "Retiro",
+
+    transactionHistory:
+      "Historial de transacciones",
+
+    language:
+      "Idioma",
+
+    transactionRecord:
+      "Registro de transacción",
+
+    miningAmount:
+      "Monto de minería",
+
+    uploadProof:
+      "Subir comprobante",
+
+    withdrawalAmount:
+      "Monto del retiro",
+
+    bank:
+      "Banco",
+
+    accountNumber:
+      "Número de cuenta",
+
+    accountName:
+      "Nombre de la cuenta",
+
+    withdrawalFee:
+      "Tarifa de retiro",
+
+    netAmount:
+      "Monto neto",
+
+    mining:
+      "Minando",
+
+    inactive:
+      "Inactivo"
+
+  },
+
+
+  pt:{
+
+    dashboard:
+      "Painel",
+
+    miner:
+      "Minerador BTC",
+
+    bonus:
+      "Bônus",
+
+    withdrawal:
+      "Saque",
+
+    history:
+      "Histórico",
+
+    settings:
+      "Configurações",
+
+    dashboardSubtitle:
+      "Visão geral da sua conta NexaVest",
+
+    minerSubtitle:
+      "Gerencie seu ciclo de mineração ativo",
+
+    bonusSubtitle:
+      "Veja seu saldo de bônus disponível",
+
+    withdrawalSubtitle:
+      "Solicite um saque do seu saldo disponível",
+
+    historySubtitle:
+      "Veja seus registros de transações",
+
+    settingsSubtitle:
+      "Gerencie suas preferências NexaVest",
+
+    dashboardNav:
+      "🏠 Painel",
+
+    minerNav:
+      "⛏️ Minerador BTC",
+
+    bonusNav:
+      "🎁 Bônus",
+
+    withdrawNav:
+      "💸 Saque",
+
+    historyNav:
+      "📋 Histórico",
+
+    settingsNav:
+      "⚙️ Configurações",
+
+    logout:
+      "🚪 Sair",
+
+    fullName:
+      "Nome completo",
+
+    fullNamePlaceholder:
+      "Nome completo",
+
+    email:
+      "E-mail",
+
+    emailPlaceholder:
+      "Endereço de e-mail",
+
+    password:
+      "Senha",
+
+    passwordPlaceholder:
+      "Senha",
+
+    country:
+      "País",
+
+    accountBalance:
+      "Saldo da conta",
+
+    bonusBalance:
+      "Saldo do bônus",
+
+    minedEarnings:
+      "Ganhos de mineração",
+
+    miningStatus:
+      "Status da mineração",
+
+    accountOverview:
+      "Visão geral da conta",
+
+    bonusTitle:
+      "Bônus",
+
+    withdrawalTitle:
+      "Saque",
+
+    transactionHistory:
+      "Histórico de transações",
+
+    language:
+      "Idioma",
+
+    transactionRecord:
+      "Registro da transação",
+
+    miningAmount:
+      "Valor da mineração",
+
+    uploadProof:
+      "Enviar comprovante",
+
+    withdrawalAmount:
+      "Valor do saque",
+
+    bank:
+      "Banco",
+
+    accountNumber:
+      "Número da conta",
+
+    accountName:
+      "Nome da conta",
+
+    withdrawalFee:
+      "Taxa de saque",
+
+    netAmount:
+      "Valor líquido",
+
+    mining:
+      "Minerando",
+
+    inactive:
+      "Inativo"
+
+  },
+
+
+  fr:{
+
+    dashboard:
+      "Tableau de bord",
+
+    miner:
+      "Mineur BTC",
+
+    bonus:
+      "Bonus",
+
+    withdrawal:
+      "Retrait",
+
+    history:
+      "Historique",
+
+    settings:
+      "Paramètres",
+
+    dashboardSubtitle:
+      "Aperçu de votre compte NexaVest",
+
+    minerSubtitle:
+      "Gérez votre cycle de minage actif",
+
+    bonusSubtitle:
+      "Consultez votre solde bonus disponible",
+
+    withdrawalSubtitle:
+      "Demandez un retrait de votre solde disponible",
+
+    historySubtitle:
+      "Consultez vos transactions",
+
+    settingsSubtitle:
+      "Gérez vos préférences NexaVest",
+
+    dashboardNav:
+      "🏠 Tableau de bord",
+
+    minerNav:
+      "⛏️ Mineur BTC",
+
+    bonusNav:
+      "🎁 Bonus",
+
+    withdrawNav:
+      "💸 Retrait",
+
+    historyNav:
+      "📋 Historique",
+
+    settingsNav:
+      "⚙️ Paramètres",
+
+    logout:
+      "🚪 Déconnexion",
+
+    fullName:
+      "Nom complet",
+
+    fullNamePlaceholder:
+      "Nom complet",
+
+    email:
+      "E-mail",
+
+    emailPlaceholder:
+      "Adresse e-mail",
+
+    password:
+      "Mot de passe",
+
+    passwordPlaceholder:
+      "Mot de passe",
+
+    country:
+      "Pays",
+
+    accountBalance:
+      "Solde du compte",
+
+    bonusBalance:
+      "Solde bonus",
+
+    minedEarnings:
+      "Gains de minage",
+
+    miningStatus:
+      "État du minage",
+
+    accountOverview:
+      "Aperçu du compte",
+
+    bonusTitle:
+      "Bonus",
+
+    withdrawalTitle:
+      "Retrait",
+
+    transactionHistory:
+      "Historique des transactions",
+
+    language:
+      "Langue",
+
+    transactionRecord:
+      "Détail de la transaction",
+
+    miningAmount:
+      "Montant du minage",
+
+    uploadProof:
+      "Téléverser le justificatif",
+
+    withdrawalAmount:
+      "Montant du retrait",
+
+    bank:
+      "Banque",
+
+    accountNumber:
+      "Numéro de compte",
+
+    accountName:
+      "Nom du titulaire",
+
+    withdrawalFee:
+      "Frais de retrait",
+
+    netAmount:
+      "Montant net",
+
+    mining:
+      "Minage",
+
+    inactive:
+      "Inactif"
+
+  }
+
+};
+
+
+function applyLanguage(lang){
+
+  if(!translations[lang])
+    lang = "en";
+
+  localStorage.setItem(
+    STORAGE_LANG,
+    lang
+  );
+
+  document.documentElement.lang =
+    lang;
+
+
+  document
+    .querySelectorAll(".lang-btn")
+    .forEach(btn => {
+
+      btn.classList.toggle(
+        "active",
+        btn.dataset.lang === lang
+      );
+
+    });
+
+
+  const t =
+    translations[lang];
+
+
+  document
+    .querySelectorAll("[data-i18n]")
+    .forEach(el => {
+
+      const key =
+        el.dataset.i18n;
+
+      if(t[key])
+        el.textContent =
+          t[key];
+
+    });
+
+
+  const mobileLogout =
+    document.getElementById(
+      "mobileLogoutText"
+    );
+
+  if(mobileLogout){
+
+    mobileLogout.textContent =
+      t.logout.replace(
+        /^🚪\s*/,
+        ""
+      );
+
+  }
+
+
+  document
+    .querySelectorAll(
+      "[data-i18n-placeholder]"
+    )
+    .forEach(el => {
+
+      const key =
+        el.dataset.i18nPlaceholder;
+
+      if(t[key])
+        el.placeholder =
+          t[key];
+
+    });
+
+
+  const page =
+    document
+      .querySelector(
+        ".page:not(.hidden)"
+      )
+      ?.id
+      ?.replace(
+        "page-",
+        ""
+      );
+
+
+  if(
+    page &&
+    pageTitles[page]
+  ){
+
+    document
+      .getElementById("pageTitle")
+      .textContent =
+      t[
+        pageTitles[page][0]
+      ];
+
+    document
+      .getElementById("pageSubtitle")
+      .textContent =
+      t[
+        pageTitles[page][1]
+      ];
+
+  }
+
+
+  renderAll();
+
+}
+
 
 document
   .querySelectorAll(".lang-btn")
   .forEach(btn => {
 
-    btn.addEventListener("click",() => {
+    btn.addEventListener(
+      "click",
+      () => {
 
-      const user =
-        getCurrentUser();
-
-      applyLanguage(
-        btn.dataset.lang
-      );
-
-      if(user){
-
-        user.language =
-          btn.dataset.lang;
-
-        saveCurrentUser(user);
+        applyLanguage(
+          btn.dataset.lang
+        );
 
       }
-
-    });
+    );
 
   });
 
-/* =========================================================
-   LOGOUT
-   ========================================================= */
 
-function logoutUser(){
+/* Apply saved language immediately */
 
-  localStorage.removeItem(
-    STORAGE_CURRENT
-  );
+applyLanguage(
+  localStorage.getItem(
+    STORAGE_LANG
+  ) || "en"
+);
 
-  if(minerInterval){
-
-    clearInterval(minerInterval);
-    minerInterval = null;
-
-  }
-
-  if(bonusInterval){
-
-    clearInterval(bonusInterval);
-    bonusInterval = null;
-
-  }
-
-  if(withdrawalInterval){
-
-    clearInterval(withdrawalInterval);
-    withdrawalInterval = null;
-
-  }
-
-  document
-    .getElementById("authForm")
-    .reset();
-
-  showAuth("login");
-
-}
-
-/* EXISTING SETTINGS LOGOUT */
-document
-  .getElementById("logoutBtn")
-  .addEventListener(
-    "click",
-    logoutUser
-  );
-
-/* EXISTING DASHBOARD LOGOUT */
-document
-  .getElementById("dashboardLogoutBtn")
-  .addEventListener(
-    "click",
-    logoutUser
-  );
-
-/* ADDED SIDEBAR LOGOUT */
-document
-  .getElementById("sidebarLogoutBtn")
-  .addEventListener(
-    "click",
-    logoutUser
-  );
-
-/* ADDED MOBILE LOGOUT */
-document
-  .getElementById("mobileLogoutBtn")
-  .addEventListener(
-    "click",
-    logoutUser
-  );
 
 /* =========================================================
    UTILS
@@ -4451,14 +4868,32 @@ document
 
 function escapeHtml(value){
 
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  return String(
+    value ?? ""
+  )
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
+
 
 /* =========================================================
    RENDER ALL
@@ -4467,13 +4902,19 @@ function escapeHtml(value){
 function renderAll(){
 
   updateDashboard();
+
   renderMiner();
+
   renderBonus();
+
   renderWithdrawal();
+
   updateWithdrawalStatuses();
+
   renderHistory();
 
 }
+
 
 /* =========================================================
    STARTUP
@@ -4481,57 +4922,44 @@ function renderAll(){
 
 function boot(){
 
+  setTimeout(
+    () => {
+
+      document
+        .getElementById("loading")
+        .classList.add("hidden");
+
+    },
+    300
+  );
+
+
   const user =
     getCurrentUser();
 
-  setTimeout(() => {
-
-    document
-      .getElementById("loading")
-      .classList.add("hidden");
-
-  },300);
 
   if(user){
 
-    const countryLang =
-      getLanguageForCountry(user.country);
-
-    user.language =
-      countryLang;
-
-    repairUser(user);
-
-    const refreshed =
-      getCurrentUser();
-
     if(
-      refreshed &&
-      refreshed.miner &&
-      refreshed.miner.running &&
-      Date.now() >= refreshed.miner.endTime
+      user.miner &&
+      user.miner.running &&
+      Date.now() >=
+      user.miner.endTime
     ){
 
-      settleMining(refreshed);
+      settleMining(user);
 
     }
 
+
     updateWithdrawalStatuses();
-
-    currentLanguage =
-      countryLang;
-
-    localStorage.setItem(
-      STORAGE_LANG,
-      countryLang
-    );
-
-    applyLanguage(countryLang);
 
     enterApp();
 
+
     const refreshedUser =
       getCurrentUser();
+
 
     if(
       refreshedUser &&
@@ -4543,17 +4971,29 @@ function boot(){
 
     }
 
-  }else{
 
-    currentLanguage = "en";
+    startWithdrawalStatusTimer();
+
+
+  }else{
 
     showAuth("register");
 
-    applyLanguage("en");
-
   }
 
+
+  const savedLang =
+    localStorage.getItem(
+      STORAGE_LANG
+    ) || "en";
+
+
+  applyLanguage(
+    savedLang
+  );
+
 }
+
 
 boot();
 
