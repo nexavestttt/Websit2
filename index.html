@@ -895,8 +895,6 @@ td{
 
       </div>
 
-      <!-- DASHBOARD LOGOUT -->
-
       <div class="section">
 
         <button
@@ -1297,8 +1295,6 @@ td{
 
         </div>
 
-        <!-- LOGOUT BUTTON -->
-
         <button
           id="logoutBtn"
           type="button"
@@ -1531,6 +1527,36 @@ const countryCurrency = {
 };
 
 /* =========================================================
+   COUNTRY -> LANGUAGE
+   ========================================================= */
+
+const countryLanguage = {
+
+  Peru:"es",
+  Ecuador:"es",
+  Mexico:"es",
+  "El Salvador":"es",
+  Brazil:"pt",
+  Colombia:"es",
+  Venezuela:"es",
+  Guatemala:"es",
+  Nigeria:"en",
+  "South Africa":"en",
+  Kenya:"en",
+  Ghana:"en",
+  Tanzania:"en",
+  Uganda:"en",
+  Rwanda:"fr"
+
+};
+
+function getLanguageForCountry(country){
+
+  return countryLanguage[country] || "en";
+
+}
+
+/* =========================================================
    BANKS
    ========================================================= */
 
@@ -1661,17 +1687,10 @@ function getCurrency(country){
 
 }
 
-function formatMoney(usdAmount,user){
-
-  const amount = Number(usdAmount || 0);
+function getCurrencyDecimals(user){
 
   const currency =
     getCurrency(user && user.country);
-
-  const localAmount =
-    amount * currency.rate;
-
-  let decimals = 2;
 
   if(
     currency.code === "COP" ||
@@ -1680,8 +1699,77 @@ function formatMoney(usdAmount,user){
     currency.code === "UGX" ||
     currency.code === "RWF"
   ){
-    decimals = 0;
+    return 0;
   }
+
+  return 2;
+
+}
+
+function usdToLocal(usdAmount,user){
+
+  const currency =
+    getCurrency(user && user.country);
+
+  return (
+    Number(usdAmount || 0) *
+    Number(currency.rate || 1)
+  );
+
+}
+
+function localToUSD(localAmount,user){
+
+  const currency =
+    getCurrency(user && user.country);
+
+  const rate =
+    Number(currency.rate || 1);
+
+  return (
+    Number(localAmount || 0) / rate
+  );
+
+}
+
+function formatLocalInputAmount(usdAmount,user){
+
+  return usdToLocal(
+    usdAmount,
+    user
+  ).toFixed(
+    getCurrencyDecimals(user)
+  );
+
+}
+
+function getLocalCurrencyLabel(user){
+
+  const currency =
+    getCurrency(user && user.country);
+
+  return (
+    currency.code +
+    " (" +
+    currency.symbol +
+    ")"
+  );
+
+}
+
+function formatMoney(usdAmount,user){
+
+  const amount =
+    Number(usdAmount || 0);
+
+  const currency =
+    getCurrency(user && user.country);
+
+  const localAmount =
+    amount * currency.rate;
+
+  const decimals =
+    getCurrencyDecimals(user);
 
   return (
     currency.symbol +
@@ -1820,6 +1908,9 @@ function createUser(name,email,password,country){
   const randomBonus =
     generateRandomBonus();
 
+  const userLanguage =
+    getLanguageForCountry(country);
+
   const user = {
 
     id:
@@ -1834,6 +1925,9 @@ function createUser(name,email,password,country){
     email:normalizedEmail,
     password:password,
     country:country,
+
+    /* COUNTRY DETERMINES THE DEFAULT LANGUAGE */
+    language:userLanguage,
 
     balance:0,
 
@@ -1862,6 +1956,14 @@ function createUser(name,email,password,country){
   localStorage.setItem(
     STORAGE_CURRENT,
     user.id
+  );
+
+  /* Apply the country's language immediately */
+  currentLanguage = userLanguage;
+
+  localStorage.setItem(
+    STORAGE_LANG,
+    userLanguage
   );
 
   alert(
@@ -1894,6 +1996,21 @@ function repairUser(user){
 
   if(!user.country){
     user.country = "Ecuador";
+  }
+
+  /*
+    If the user has no saved language, use the
+    language assigned to their selected country.
+  */
+  if(
+    !user.language ||
+    !translations ||
+    !translations[user.language]
+  ){
+
+    user.language =
+      getLanguageForCountry(user.country);
+
   }
 
   if(
@@ -2027,6 +2144,25 @@ function enterApp(){
 
   }
 
+  /*
+    COUNTRY IS AUTHORITATIVE WHEN ENTERING THE APP.
+    This prevents a previous user's/default English
+    language from remaining on the page.
+  */
+  const countryLang =
+    getLanguageForCountry(user.country);
+
+  user.language = countryLang;
+
+  saveCurrentUser(user);
+
+  currentLanguage = countryLang;
+
+  localStorage.setItem(
+    STORAGE_LANG,
+    countryLang
+  );
+
   document
     .getElementById("authPage")
     .classList.add("hidden");
@@ -2034,6 +2170,8 @@ function enterApp(){
   document
     .getElementById("app")
     .classList.remove("hidden");
+
+  applyLanguage(countryLang);
 
   renderAll();
 
@@ -2098,7 +2236,16 @@ document
         );
 
       if(user){
+
+        /*
+          Switch language before entering the app.
+        */
+        applyLanguage(
+          getLanguageForCountry(user.country)
+        );
+
         enterApp();
+
       }
 
     }else{
@@ -2126,12 +2273,29 @@ document
 
       }
 
+      /*
+        Login language comes directly from
+        the account's registered country.
+      */
+      user.language =
+        getLanguageForCountry(user.country);
+
       repairUser(user);
 
       localStorage.setItem(
         STORAGE_CURRENT,
         user.id
       );
+
+      currentLanguage =
+        user.language;
+
+      localStorage.setItem(
+        STORAGE_LANG,
+        user.language
+      );
+
+      applyLanguage(user.language);
 
       enterApp();
 
@@ -2531,8 +2695,7 @@ const translations = {
 
 };
 
-let currentLanguage =
-  localStorage.getItem(STORAGE_LANG) || "en";
+let currentLanguage = "en";
 
 function getText(key){
 
@@ -2557,7 +2720,10 @@ function applyLanguage(lang){
 
   currentLanguage = lang;
 
-  localStorage.setItem(STORAGE_LANG,lang);
+  localStorage.setItem(
+    STORAGE_LANG,
+    lang
+  );
 
   document.documentElement.lang = lang;
 
@@ -2666,8 +2832,6 @@ function applyLanguage(lang){
   setText("settingsSubtitle","settingsSubtitle");
   setText("logoutBtn","logout");
 
-  /* NEW: DASHBOARD LOGOUT LANGUAGE */
-
   setText("dashboardLogoutBtn","logout");
 
   setText("transactionRecordTitle","transactionRecord");
@@ -2677,9 +2841,34 @@ function applyLanguage(lang){
   setPlaceholder("authEmail","emailPlaceholder");
   setPlaceholder("authPassword","passwordPlaceholder");
   setPlaceholder("minerAmount","minimumMining");
-  setPlaceholder("withdrawAmount","enterAmount");
   setPlaceholder("withdrawAccount","accountNumberPlaceholder");
   setPlaceholder("withdrawName","accountHolderPlaceholder");
+
+  /*
+    Withdrawal amount placeholder now uses
+    the user's local currency.
+  */
+  const withdrawalUser =
+    getCurrentUser();
+
+  const withdrawalInput =
+    document.getElementById("withdrawAmount");
+
+  if(withdrawalInput){
+
+    const currency =
+      getCurrency(
+        withdrawalUser &&
+        withdrawalUser.country
+      );
+
+    withdrawalInput.placeholder =
+      getText("enterAmount") +
+      " (" +
+      currency.symbol +
+      ")";
+
+  }
 
   const countrySelect =
     document.getElementById("authCountry");
@@ -3372,8 +3561,16 @@ document
     document.getElementById("withdrawSource").value =
       "bonus";
 
+    /*
+      BONUS IS STORED INTERNALLY IN USD.
+      The withdrawal field displays the equivalent
+      local-currency amount.
+    */
     document.getElementById("withdrawAmount").value =
-      Number(user.bonusBalance || 0);
+      formatLocalInputAmount(
+        Number(user.bonusBalance || 0),
+        user
+      );
 
     showPage("withdrawal");
 
@@ -3484,10 +3681,24 @@ function updateWithdrawalCalculation(){
   const source =
     document.getElementById("withdrawSource").value;
 
-  const amount =
+  /*
+    IMPORTANT:
+    The amount typed into the withdrawal field
+    is LOCAL CURRENCY.
+
+    It is converted back to USD before any
+    balance, fee or transaction calculation.
+  */
+  const localAmount =
     Number(
       document.getElementById("withdrawAmount").value
     ) || 0;
+
+  const amount =
+    localToUSD(
+      localAmount,
+      user
+    );
 
   const fee =
     source === "bonus"
@@ -3495,8 +3706,15 @@ function updateWithdrawalCalculation(){
       : MINER_WITHDRAWAL_FEE;
 
   const net =
-    Math.max(0,amount - fee);
+    Math.max(
+      0,
+      amount - fee
+    );
 
+  /*
+    Fee and net are stored/calculated internally
+    in USD but displayed in the user's currency.
+  */
   document.getElementById("withdrawFee").textContent =
     formatMoney(fee,user);
 
@@ -3508,6 +3726,19 @@ function updateWithdrawalCalculation(){
 
   document.getElementById("withdrawBalance").textContent =
     formatMoney(balance,user);
+
+  /*
+    Keep the withdrawal placeholder tied
+    to the user's selected currency.
+  */
+  const currency =
+    getCurrency(user.country);
+
+  document.getElementById("withdrawAmount").placeholder =
+    getText("enterAmount") +
+    " (" +
+    currency.symbol +
+    ")";
 
 }
 
@@ -3555,9 +3786,21 @@ function submitWithdrawal(){
       ? BONUS_WITHDRAWAL_FEE
       : MINER_WITHDRAWAL_FEE;
 
-  const amount =
+  /*
+    USER ENTERS LOCAL CURRENCY.
+  */
+  const localAmount =
     Number(
       document.getElementById("withdrawAmount").value
+    );
+
+  /*
+    CONVERT LOCAL CURRENCY BACK TO INTERNAL USD.
+  */
+  const amount =
+    localToUSD(
+      localAmount,
+      user
     );
 
   const bank =
@@ -3578,7 +3821,12 @@ function submitWithdrawal(){
   const available =
     getWithdrawalBalance(user,source);
 
-  if(!amount || amount <= 0){
+  if(
+    !localAmount ||
+    localAmount <= 0 ||
+    !amount ||
+    amount <= 0
+  ){
 
     alert(
       getText("validWithdrawal")
@@ -3602,8 +3850,11 @@ function submitWithdrawal(){
 
     alert(
       getText("greaterFee") +
-      " $" +
-      withdrawalFee +
+      " " +
+      formatMoney(
+        withdrawalFee,
+        user
+      ) +
       "."
     );
 
@@ -3621,6 +3872,9 @@ function submitWithdrawal(){
 
   }
 
+  /*
+    NET REMAINS AN INTERNAL USD VALUE.
+  */
   const net =
     amount - withdrawalFee;
 
@@ -3683,6 +3937,10 @@ function submitWithdrawal(){
         ? "Bonus"
         : "Miner",
 
+    /*
+      TRANSACTION VALUES ARE STORED IN USD.
+      They are displayed in local currency later.
+    */
     amount:amount,
     fee:withdrawalFee,
     net:net,
@@ -4103,9 +4361,27 @@ document
 
     btn.addEventListener("click",() => {
 
+      const user =
+        getCurrentUser();
+
+      /*
+        Manual language selection is still available
+        in Settings. The selected country language is
+        automatically restored whenever the user logs
+        in or enters the app again.
+      */
       applyLanguage(
         btn.dataset.lang
       );
+
+      if(user){
+
+        user.language =
+          btn.dataset.lang;
+
+        saveCurrentUser(user);
+
+      }
 
     });
 
@@ -4145,6 +4421,12 @@ function logoutUser(){
   document
     .getElementById("authForm")
     .reset();
+
+  /*
+    Do not force English here.
+    The next account login/registration will
+    determine its language from its country.
+  */
 
   showAuth("login");
 
@@ -4200,8 +4482,8 @@ function renderAll(){
 
 function boot(){
 
-  currentLanguage =
-    localStorage.getItem(STORAGE_LANG) || "en";
+  const user =
+    getCurrentUser();
 
   setTimeout(() => {
 
@@ -4211,9 +4493,17 @@ function boot(){
 
   },300);
 
-  const user = getCurrentUser();
-
   if(user){
+
+    /*
+      Always determine the language from the
+      logged-in user's country.
+    */
+    const countryLang =
+      getLanguageForCountry(user.country);
+
+    user.language =
+      countryLang;
 
     repairUser(user);
 
@@ -4233,6 +4523,20 @@ function boot(){
 
     updateWithdrawalStatuses();
 
+    /*
+      Apply country language BEFORE entering
+      the application.
+    */
+    currentLanguage =
+      countryLang;
+
+    localStorage.setItem(
+      STORAGE_LANG,
+      countryLang
+    );
+
+    applyLanguage(countryLang);
+
     enterApp();
 
     const refreshedUser =
@@ -4250,11 +4554,17 @@ function boot(){
 
   }else{
 
+    /*
+      No logged-in user yet.
+      Register screen remains available.
+    */
+    currentLanguage = "en";
+
     showAuth("register");
 
-  }
+    applyLanguage("en");
 
-  applyLanguage(currentLanguage);
+  }
 
 }
 
