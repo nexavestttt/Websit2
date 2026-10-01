@@ -720,15 +720,33 @@ td{
         <label id="labelCountry">Country</label>
 
         <select id="authCountry">
+
           <option value="">Select country</option>
-          <option value="Peru">Peru</option>
-          <option value="Ecuador">Ecuador</option>
-          <option value="Mexico">Mexico</option>
-          <option value="El Salvador">El Salvador</option>
-          <option value="Brazil">Brazil</option>
+
+          <!-- SPANISH-SPEAKING COUNTRIES -->
+          <option value="Argentina">Argentina</option>
+          <option value="Bolivia">Bolivia</option>
+          <option value="Chile">Chile</option>
           <option value="Colombia">Colombia</option>
-          <option value="Venezuela">Venezuela</option>
+          <option value="Costa Rica">Costa Rica</option>
+          <option value="Cuba">Cuba</option>
+          <option value="Dominican Republic">Dominican Republic</option>
+          <option value="Ecuador">Ecuador</option>
+          <option value="El Salvador">El Salvador</option>
+          <option value="Equatorial Guinea">Equatorial Guinea</option>
           <option value="Guatemala">Guatemala</option>
+          <option value="Honduras">Honduras</option>
+          <option value="Mexico">Mexico</option>
+          <option value="Nicaragua">Nicaragua</option>
+          <option value="Panama">Panama</option>
+          <option value="Paraguay">Paraguay</option>
+          <option value="Peru">Peru</option>
+          <option value="Spain">Spain</option>
+          <option value="Uruguay">Uruguay</option>
+          <option value="Venezuela">Venezuela</option>
+
+          <!-- EXISTING OTHER COUNTRIES -->
+          <option value="Brazil">Brazil</option>
           <option value="Nigeria">Nigeria</option>
           <option value="South Africa">South Africa</option>
           <option value="Kenya">Kenya</option>
@@ -736,6 +754,7 @@ td{
           <option value="Tanzania">Tanzania</option>
           <option value="Uganda">Uganda</option>
           <option value="Rwanda">Rwanda</option>
+
         </select>
       </div>
 
@@ -1434,34 +1453,22 @@ let withdrawalInterval = null;
 
 const countryCurrency = {
 
-  Peru:{
-    code:"PEN",
-    symbol:"S/",
-    rate:3.50
-  },
-
-  Ecuador:{
-    code:"USD",
+  Argentina:{
+    code:"ARS",
     symbol:"$",
-    rate:1
+    rate:1500
   },
 
-  Mexico:{
-    code:"MXN",
+  Bolivia:{
+    code:"BOB",
+    symbol:"Bs",
+    rate:6.90
+  },
+
+  Chile:{
+    code:"CLP",
     symbol:"$",
-    rate:18
-  },
-
-  "El Salvador":{
-    code:"USD",
-    symbol:"$",
-    rate:1
-  },
-
-  Brazil:{
-    code:"BRL",
-    symbol:"R$",
-    rate:5.40
+    rate:950
   },
 
   Colombia:{
@@ -1470,16 +1477,106 @@ const countryCurrency = {
     rate:4000
   },
 
-  Venezuela:{
-    code:"VES",
-    symbol:"Bs.",
-    rate:170
+  Costa Rica:{
+    code:"CRC",
+    symbol:"₡",
+    rate:510
+  },
+
+  Cuba:{
+    code:"CUP",
+    symbol:"$",
+    rate:24
+  },
+
+  "Dominican Republic":{
+    code:"DOP",
+    symbol:"RD$",
+    rate:63
+  },
+
+  Ecuador:{
+    code:"USD",
+    symbol:"$",
+    rate:1
+  },
+
+  "El Salvador":{
+    code:"USD",
+    symbol:"$",
+    rate:1
+  },
+
+  "Equatorial Guinea":{
+    code:"XAF",
+    symbol:"FCFA",
+    rate:560
   },
 
   Guatemala:{
     code:"GTQ",
     symbol:"Q",
     rate:7.70
+  },
+
+  Honduras:{
+    code:"HNL",
+    symbol:"L",
+    rate:26.5
+  },
+
+  Mexico:{
+    code:"MXN",
+    symbol:"$",
+    rate:18
+  },
+
+  Nicaragua:{
+    code:"NIO",
+    symbol:"C$",
+    rate:36.7
+  },
+
+  Panama:{
+    code:"USD",
+    symbol:"$",
+    rate:1
+  },
+
+  Paraguay:{
+    code:"PYG",
+    symbol:"₲",
+    rate:7800
+  },
+
+  Peru:{
+    code:"PEN",
+    symbol:"S/",
+    rate:3.50
+  },
+
+  Spain:{
+    code:"EUR",
+    symbol:"€",
+    rate:0.85
+  },
+
+  Uruguay:{
+    code:"UYU",
+    symbol:"$U",
+    rate:40
+  },
+
+  Venezuela:{
+    code:"VES",
+    symbol:"Bs.",
+    rate:170
+  },
+
+  Brazil:{
+    code:"BRL",
+    symbol:"R$",
+    rate:5.40
   },
 
   Nigeria:{
@@ -1532,20 +1629,36 @@ const countryCurrency = {
 
 const countryLanguage = {
 
-  Peru:"es",
-  Ecuador:"es",
-  Mexico:"es",
-  "El Salvador":"es",
-  Brazil:"pt",
+  Argentina:"es",
+  Bolivia:"es",
+  Chile:"es",
   Colombia:"es",
-  Venezuela:"es",
+  Costa Rica:"es",
+  Cuba:"es",
+  "Dominican Republic":"es",
+  Ecuador:"es",
+  "El Salvador":"es",
+  "Equatorial Guinea":"es",
   Guatemala:"es",
+  Honduras:"es",
+  Mexico:"es",
+  Nicaragua:"es",
+  Panama:"es",
+  Paraguay:"es",
+  Peru:"es",
+  Spain:"es",
+  Uruguay:"es",
+  Venezuela:"es",
+
+  Brazil:"pt",
+
   Nigeria:"en",
   "South Africa":"en",
   Kenya:"en",
   Ghana:"en",
   Tanzania:"en",
   Uganda:"en",
+
   Rwanda:"fr"
 
 };
@@ -1562,39 +1675,25 @@ function getLanguageForCountry(country){
 
 const countryBanks = {
 
-  Peru:[
-    "Banco de Crédito del Perú (BCP)",
-    "BBVA",
-    "Interbank",
-    "Scotiabank"
+  Argentina:[
+    "Banco Nación",
+    "Banco Galicia",
+    "Santander Argentina",
+    "BBVA Argentina"
   ],
 
-  Ecuador:[
-    "Banco Pichincha",
-    "Banco Guayaquil",
-    "Produbanco",
-    "Banco del Pacífico"
+  Bolivia:[
+    "Banco Nacional de Bolivia",
+    "Banco Mercantil Santa Cruz",
+    "Banco Unión",
+    "Banco Bisa"
   ],
 
-  Mexico:[
-    "BBVA México",
-    "Banorte",
-    "Santander",
-    "HSBC México"
-  ],
-
-  "El Salvador":[
-    "Banco Agrícola",
-    "Banco Cuscatlán",
-    "BAC Credomatic",
-    "Davivienda"
-  ],
-
-  Brazil:[
-    "Nubank",
-    "Itaú",
-    "Bradesco",
-    "Banco do Brasil"
+  Chile:[
+    "Banco de Chile",
+    "BancoEstado",
+    "Banco Santander Chile",
+    "BCI"
   ],
 
   Colombia:[
@@ -1604,11 +1703,44 @@ const countryBanks = {
     "Banco de Bogotá"
   ],
 
-  Venezuela:[
-    "Banco de Venezuela",
-    "Banesco",
-    "Mercantil",
-    "BBVA Provincial"
+  Costa Rica:[
+    "Banco Nacional de Costa Rica",
+    "Banco de Costa Rica",
+    "BAC Credomatic",
+    "Scotiabank Costa Rica"
+  ],
+
+  Cuba:[
+    "Banco Nacional de Cuba",
+    "Banco Popular de Ahorro",
+    "Banco Metropolitano"
+  ],
+
+  "Dominican Republic":[
+    "Banco Popular Dominicano",
+    "Banreservas",
+    "Banco BHD",
+    "Scotiabank República Dominicana"
+  ],
+
+  Ecuador:[
+    "Banco Pichincha",
+    "Banco Guayaquil",
+    "Produbanco",
+    "Banco del Pacífico"
+  ],
+
+  "El Salvador":[
+    "Banco Agrícola",
+    "Banco Cuscatlán",
+    "BAC Credomatic",
+    "Davivienda"
+  ],
+
+  "Equatorial Guinea":[
+    "BANGE",
+    "BGFI Bank Guinea Ecuatorial",
+    "CCEI Bank"
   ],
 
   Guatemala:[
@@ -1616,6 +1748,76 @@ const countryBanks = {
     "Banrural",
     "G&T Continental",
     "BAC Guatemala"
+  ],
+
+  Honduras:[
+    "Banco Atlántida",
+    "BAC Honduras",
+    "Ficohsa",
+    "Banco de Occidente"
+  ],
+
+  Mexico:[
+    "BBVA México",
+    "Banorte",
+    "Santander",
+    "HSBC México"
+  ],
+
+  Nicaragua:[
+    "BAC Nicaragua",
+    "Banco Lafise",
+    "Banpro",
+    "Banco de Finanzas"
+  ],
+
+  Panama:[
+    "Banco General",
+    "Banistmo",
+    "Global Bank",
+    "BAC Panamá"
+  ],
+
+  Paraguay:[
+    "Banco Nacional de Fomento",
+    "Banco Continental",
+    "Banco Itaú Paraguay",
+    "Sudameris Bank"
+  ],
+
+  Peru:[
+    "Banco de Crédito del Perú (BCP)",
+    "BBVA",
+    "Interbank",
+    "Scotiabank"
+  ],
+
+  Spain:[
+    "Banco Santander",
+    "BBVA",
+    "CaixaBank",
+    "Banco Sabadell"
+  ],
+
+  Uruguay:[
+    "Banco República",
+    "Santander Uruguay",
+    "BBVA Uruguay",
+    "Scotiabank Uruguay"
+  ],
+
+  Venezuela:[
+    "Banco de Venezuela",
+    "Banesco",
+    "Mercantil",
+    "BBVA Provincial"
+  ],
+
+  Brazil:[
+    "Nubank",
+    "Itaú",
+    "Bradesco",
+    "Banco do Brasil"
   ],
 
   Nigeria:[
@@ -1697,7 +1899,9 @@ function getCurrencyDecimals(user){
     currency.code === "VES" ||
     currency.code === "TZS" ||
     currency.code === "UGX" ||
-    currency.code === "RWF"
+    currency.code === "RWF" ||
+    currency.code === "PYG" ||
+    currency.code === "CLP"
   ){
     return 0;
   }
@@ -1926,7 +2130,6 @@ function createUser(name,email,password,country){
     password:password,
     country:country,
 
-    /* COUNTRY DETERMINES THE DEFAULT LANGUAGE */
     language:userLanguage,
 
     balance:0,
@@ -1958,7 +2161,6 @@ function createUser(name,email,password,country){
     user.id
   );
 
-  /* Apply the country's language immediately */
   currentLanguage = userLanguage;
 
   localStorage.setItem(
@@ -1998,13 +2200,8 @@ function repairUser(user){
     user.country = "Ecuador";
   }
 
-  /*
-    If the user has no saved language, use the
-    language assigned to their selected country.
-  */
   if(
     !user.language ||
-    !translations ||
     !translations[user.language]
   ){
 
@@ -2144,11 +2341,6 @@ function enterApp(){
 
   }
 
-  /*
-    COUNTRY IS AUTHORITATIVE WHEN ENTERING THE APP.
-    This prevents a previous user's/default English
-    language from remaining on the page.
-  */
   const countryLang =
     getLanguageForCountry(user.country);
 
@@ -2237,9 +2429,6 @@ document
 
       if(user){
 
-        /*
-          Switch language before entering the app.
-        */
         applyLanguage(
           getLanguageForCountry(user.country)
         );
@@ -2273,10 +2462,6 @@ document
 
       }
 
-      /*
-        Login language comes directly from
-        the account's registered country.
-      */
       user.language =
         getLanguageForCountry(user.country);
 
@@ -2844,10 +3029,6 @@ function applyLanguage(lang){
   setPlaceholder("withdrawAccount","accountNumberPlaceholder");
   setPlaceholder("withdrawName","accountHolderPlaceholder");
 
-  /*
-    Withdrawal amount placeholder now uses
-    the user's local currency.
-  */
   const withdrawalUser =
     getCurrentUser();
 
@@ -3561,11 +3742,6 @@ document
     document.getElementById("withdrawSource").value =
       "bonus";
 
-    /*
-      BONUS IS STORED INTERNALLY IN USD.
-      The withdrawal field displays the equivalent
-      local-currency amount.
-    */
     document.getElementById("withdrawAmount").value =
       formatLocalInputAmount(
         Number(user.bonusBalance || 0),
@@ -3681,14 +3857,6 @@ function updateWithdrawalCalculation(){
   const source =
     document.getElementById("withdrawSource").value;
 
-  /*
-    IMPORTANT:
-    The amount typed into the withdrawal field
-    is LOCAL CURRENCY.
-
-    It is converted back to USD before any
-    balance, fee or transaction calculation.
-  */
   const localAmount =
     Number(
       document.getElementById("withdrawAmount").value
@@ -3711,10 +3879,6 @@ function updateWithdrawalCalculation(){
       amount - fee
     );
 
-  /*
-    Fee and net are stored/calculated internally
-    in USD but displayed in the user's currency.
-  */
   document.getElementById("withdrawFee").textContent =
     formatMoney(fee,user);
 
@@ -3727,10 +3891,6 @@ function updateWithdrawalCalculation(){
   document.getElementById("withdrawBalance").textContent =
     formatMoney(balance,user);
 
-  /*
-    Keep the withdrawal placeholder tied
-    to the user's selected currency.
-  */
   const currency =
     getCurrency(user.country);
 
@@ -3786,17 +3946,11 @@ function submitWithdrawal(){
       ? BONUS_WITHDRAWAL_FEE
       : MINER_WITHDRAWAL_FEE;
 
-  /*
-    USER ENTERS LOCAL CURRENCY.
-  */
   const localAmount =
     Number(
       document.getElementById("withdrawAmount").value
     );
 
-  /*
-    CONVERT LOCAL CURRENCY BACK TO INTERNAL USD.
-  */
   const amount =
     localToUSD(
       localAmount,
@@ -3872,9 +4026,6 @@ function submitWithdrawal(){
 
   }
 
-  /*
-    NET REMAINS AN INTERNAL USD VALUE.
-  */
   const net =
     amount - withdrawalFee;
 
@@ -3937,10 +4088,6 @@ function submitWithdrawal(){
         ? "Bonus"
         : "Miner",
 
-    /*
-      TRANSACTION VALUES ARE STORED IN USD.
-      They are displayed in local currency later.
-    */
     amount:amount,
     fee:withdrawalFee,
     net:net,
@@ -4364,12 +4511,6 @@ document
       const user =
         getCurrentUser();
 
-      /*
-        Manual language selection is still available
-        in Settings. The selected country language is
-        automatically restored whenever the user logs
-        in or enters the app again.
-      */
       applyLanguage(
         btn.dataset.lang
       );
@@ -4421,12 +4562,6 @@ function logoutUser(){
   document
     .getElementById("authForm")
     .reset();
-
-  /*
-    Do not force English here.
-    The next account login/registration will
-    determine its language from its country.
-  */
 
   showAuth("login");
 
@@ -4495,10 +4630,6 @@ function boot(){
 
   if(user){
 
-    /*
-      Always determine the language from the
-      logged-in user's country.
-    */
     const countryLang =
       getLanguageForCountry(user.country);
 
@@ -4523,10 +4654,6 @@ function boot(){
 
     updateWithdrawalStatuses();
 
-    /*
-      Apply country language BEFORE entering
-      the application.
-    */
     currentLanguage =
       countryLang;
 
@@ -4554,10 +4681,6 @@ function boot(){
 
   }else{
 
-    /*
-      No logged-in user yet.
-      Register screen remains available.
-    */
     currentLanguage = "en";
 
     showAuth("register");
