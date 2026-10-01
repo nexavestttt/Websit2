@@ -720,10 +720,7 @@ td{
         <label id="labelCountry">Country</label>
 
         <select id="authCountry">
-
           <option value="">Select country</option>
-
-          <!-- SPANISH-SPEAKING COUNTRIES -->
           <option value="Argentina">Argentina</option>
           <option value="Bolivia">Bolivia</option>
           <option value="Chile">Chile</option>
@@ -744,8 +741,6 @@ td{
           <option value="Spain">Spain</option>
           <option value="Uruguay">Uruguay</option>
           <option value="Venezuela">Venezuela</option>
-
-          <!-- EXISTING OTHER COUNTRIES -->
           <option value="Brazil">Brazil</option>
           <option value="Nigeria">Nigeria</option>
           <option value="South Africa">South Africa</option>
@@ -754,7 +749,6 @@ td{
           <option value="Tanzania">Tanzania</option>
           <option value="Uganda">Uganda</option>
           <option value="Rwanda">Rwanda</option>
-
         </select>
       </div>
 
@@ -820,11 +814,8 @@ td{
       </div>
 
       <div class="user-chip">
-
         <div id="userNameTop">User</div>
-
         <div class="avatar" id="userAvatar">U</div>
-
       </div>
 
     </div>
@@ -1280,35 +1271,19 @@ td{
 
         <div class="language-grid">
 
-          <button
-            class="lang-btn active"
-            data-lang="en"
-            type="button"
-          >
+          <button class="lang-btn active" data-lang="en" type="button">
             🇬🇧 English
           </button>
 
-          <button
-            class="lang-btn"
-            data-lang="es"
-            type="button"
-          >
+          <button class="lang-btn" data-lang="es" type="button">
             🇪🇸 Español
           </button>
 
-          <button
-            class="lang-btn"
-            data-lang="pt"
-            type="button"
-          >
+          <button class="lang-btn" data-lang="pt" type="button">
             🇧🇷 Português
           </button>
 
-          <button
-            class="lang-btn"
-            data-lang="fr"
-            type="button"
-          >
+          <button class="lang-btn" data-lang="fr" type="button">
             🇫🇷 Français
           </button>
 
@@ -1340,8 +1315,6 @@ td{
     </section>
 
   </main>
-
-  <!-- MOBILE NAV -->
 
   <nav class="mobile-nav">
 
@@ -1477,7 +1450,7 @@ const countryCurrency = {
     rate:4000
   },
 
-  Costa Rica:{
+  "Costa Rica":{
     code:"CRC",
     symbol:"₡",
     rate:510
@@ -1633,7 +1606,7 @@ const countryLanguage = {
   Bolivia:"es",
   Chile:"es",
   Colombia:"es",
-  Costa Rica:"es",
+  "Costa Rica":"es",
   Cuba:"es",
   "Dominican Republic":"es",
   Ecuador:"es",
@@ -1664,9 +1637,7 @@ const countryLanguage = {
 };
 
 function getLanguageForCountry(country){
-
   return countryLanguage[country] || "en";
-
 }
 
 /* =========================================================
@@ -1703,7 +1674,7 @@ const countryBanks = {
     "Banco de Bogotá"
   ],
 
-  Costa Rica:[
+  "Costa Rica":[
     "Banco Nacional de Costa Rica",
     "Banco de Costa Rica",
     "BAC Credomatic",
@@ -2808,7 +2779,7 @@ const translations = {
     createAccount:"Créer un compte",
     login:"Connexion",
     register:"S'inscrire",
-    alreadyAccount:"Vous avez déjà un compte ?",
+    alreadyAccount:"Vous avez déjà une compte ?",
     noAccount:"Vous n'avez pas de compte ?",
     accountBalance:"Solde du compte",
     bonusBalance:"Solde du bonus",
@@ -3016,7 +2987,6 @@ function applyLanguage(lang){
   setText("settingsTitle","settings");
   setText("settingsSubtitle","settingsSubtitle");
   setText("logoutBtn","logout");
-
   setText("dashboardLogoutBtn","logout");
 
   setText("transactionRecordTitle","transactionRecord");
@@ -4693,12 +4663,6 @@ function boot(){
       error
     );
 
-    /*
-      If an error happens while restoring
-      the saved account, don't leave the
-      user permanently stuck on loading.
-    */
-
     try{
 
       currentLanguage = "en";
@@ -4718,15 +4682,8 @@ function boot(){
 
   }finally{
 
-    /*
-      Always hide the loading screen,
-      whether startup succeeds or fails.
-    */
-
     if(loading){
-
       loading.classList.add("hidden");
-
     }
 
   }
