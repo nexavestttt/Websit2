@@ -722,6 +722,7 @@ td{
         <select id="authCountry">
           <option value="">Select country</option>
           <option value="Argentina">Argentina</option>
+          <option value="Belize">Belize</option>
           <option value="Bolivia">Bolivia</option>
           <option value="Chile">Chile</option>
           <option value="Colombia">Colombia</option>
@@ -1432,6 +1433,12 @@ const countryCurrency = {
     rate:1500
   },
 
+  Belize:{
+    code:"BZD",
+    symbol:"BZ$",
+    rate:2
+  },
+
   Bolivia:{
     code:"BOB",
     symbol:"Bs",
@@ -1603,6 +1610,7 @@ const countryCurrency = {
 const countryLanguage = {
 
   Argentina:"es",
+  Belize:"en",
   Bolivia:"es",
   Chile:"es",
   Colombia:"es",
@@ -1651,6 +1659,13 @@ const countryBanks = {
     "Banco Galicia",
     "Santander Argentina",
     "BBVA Argentina"
+  ],
+
+  Belize:[
+    "Atlantic Bank",
+    "Belize Bank",
+    "Heritage Bank",
+    "National Bank of Belize"
   ],
 
   Bolivia:[
