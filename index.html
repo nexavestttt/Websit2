@@ -4617,75 +4617,117 @@ function renderAll(){
 
 function boot(){
 
-  const user =
-    getCurrentUser();
+  const loading =
+    document.getElementById("loading");
 
-  setTimeout(() => {
+  try{
 
-    document
-      .getElementById("loading")
-      .classList.add("hidden");
-
-  },300);
-
-  if(user){
-
-    const countryLang =
-      getLanguageForCountry(user.country);
-
-    user.language =
-      countryLang;
-
-    repairUser(user);
-
-    const refreshed =
+    const user =
       getCurrentUser();
 
-    if(
-      refreshed &&
-      refreshed.miner &&
-      refreshed.miner.running &&
-      Date.now() >= refreshed.miner.endTime
-    ){
+    if(user){
 
-      settleMining(refreshed);
+      const countryLang =
+        getLanguageForCountry(user.country);
+
+      user.language =
+        countryLang;
+
+      repairUser(user);
+
+      const refreshed =
+        getCurrentUser();
+
+      if(
+        refreshed &&
+        refreshed.miner &&
+        refreshed.miner.running &&
+        Date.now() >= Number(refreshed.miner.endTime)
+      ){
+
+        settleMining(refreshed);
+
+      }
+
+      updateWithdrawalStatuses();
+
+      currentLanguage =
+        countryLang;
+
+      localStorage.setItem(
+        STORAGE_LANG,
+        countryLang
+      );
+
+      applyLanguage(countryLang);
+
+      enterApp();
+
+      const refreshedUser =
+        getCurrentUser();
+
+      if(
+        refreshedUser &&
+        refreshedUser.miner &&
+        refreshedUser.miner.running
+      ){
+
+        startMinerTimer();
+
+      }
+
+    }else{
+
+      currentLanguage = "en";
+
+      showAuth("register");
+
+      applyLanguage("en");
 
     }
 
-    updateWithdrawalStatuses();
+  }catch(error){
 
-    currentLanguage =
-      countryLang;
-
-    localStorage.setItem(
-      STORAGE_LANG,
-      countryLang
+    console.error(
+      "NexaVest startup error:",
+      error
     );
 
-    applyLanguage(countryLang);
+    /*
+      If an error happens while restoring
+      the saved account, don't leave the
+      user permanently stuck on loading.
+    */
 
-    enterApp();
+    try{
 
-    const refreshedUser =
-      getCurrentUser();
+      currentLanguage = "en";
 
-    if(
-      refreshedUser &&
-      refreshedUser.miner &&
-      refreshedUser.miner.running
-    ){
+      showAuth("register");
 
-      startMinerTimer();
+      applyLanguage("en");
+
+    }catch(fallbackError){
+
+      console.error(
+        "NexaVest fallback error:",
+        fallbackError
+      );
 
     }
 
-  }else{
+  }finally{
 
-    currentLanguage = "en";
+    /*
+      Always hide the loading screen,
+      whether startup succeeds or fails.
+    */
 
-    showAuth("register");
+    if(loading){
 
-    applyLanguage("en");
+      loading.classList.add("hidden");
+
+    }
 
   }
 
